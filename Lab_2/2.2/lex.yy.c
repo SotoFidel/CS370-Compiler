@@ -481,13 +481,21 @@ char *yytext_ptr;
 
                     Shaun Cooper
                     January 2015
+
+		  Modified by: Fidel Soto
+		  January 31 2020
+		  Changes:
+			  *Added a lex directive for when a parenthesis '(' or ')'
+			  are detected. The c code accompanying the directive
+			  prints the lex file and returns the character to the
+			  yacc file. Lines 36-37
 */
 
 
 int mydebug=1;
 #include "y.tab.h"
-#line 489 "lex.yy.c"
-#line 490 "lex.yy.c"
+#line 497 "lex.yy.c"
+#line 498 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -704,10 +712,10 @@ YY_DECL
 		}
 
 	{
-#line 19 "lab2docalc.l"
+#line 27 "lab2docalc.l"
 
 
-#line 710 "lex.yy.c"
+#line 718 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -776,46 +784,46 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 21 "lab2docalc.l"
+#line 29 "lab2docalc.l"
 {if (mydebug) fprintf(stderr,"Letter found\n"); 
                        yylval=*yytext-'a'; return(VARIABLE);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 23 "lab2docalc.l"
+#line 31 "lab2docalc.l"
 {if (mydebug) fprintf(stderr,"Number found\n"); 
                        yylval=atoi((const char *)yytext); return(INTEGER);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 25 "lab2docalc.l"
+#line 33 "lab2docalc.l"
 {if (mydebug) fprintf(stderr,"Whitespace found\n");}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 26 "lab2docalc.l"
+#line 34 "lab2docalc.l"
 { if (mydebug) fprintf(stderr,"return a token %c\n",*yytext); 
                        return (*yytext);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 28 "lab2docalc.l"
-{if (mydebug) fprintf(stderr, "found a parenthesis %c\n", *yytext); 
-                        return (*yytext);}
+#line 36 "lab2docalc.l"
+{if (mydebug) fprintf(stderr, "found a parenthesis %c\n", *yytext);
+		       return (*yytext);}
 	YY_BREAK
 case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
-#line 30 "lab2docalc.l"
+#line 38 "lab2docalc.l"
 { if (mydebug) fprintf(stderr,"cariage return %c\n",*yytext); 
                        return (*yytext);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 33 "lab2docalc.l"
+#line 41 "lab2docalc.l"
 ECHO;
 	YY_BREAK
-#line 818 "lex.yy.c"
+#line 826 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1832,7 +1840,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 33 "lab2docalc.l"
+#line 41 "lab2docalc.l"
 
 
 int yywrap(void)

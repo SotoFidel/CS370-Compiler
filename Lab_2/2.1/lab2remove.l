@@ -6,7 +6,17 @@
 
             Shaun Cooper
             January 2015
- 
+		
+	    Modified by: Fidel Soto
+	    Date: January 31, 2020
+	    Changes: 
+			*Added a variable (linecount) that will count lines
+			from the input (comment.tst in this case) whenever
+			a newline is detected  and, if there's an error on
+			that line, an errror will be printed.
+			*set 'debug' to true (1) to see the output of said error messages
+			*Got rid of some code that printed every other character, which
+			got in the way of the actual error print statements.
          */
         int comment = 0;
         int debug = 1;  /* prints out debug statements if desired */
@@ -23,7 +33,7 @@
 	}
 
 "*/"	{
-            if (!comment) printf(" >>>>>>>> line %d: Unexpexted comment termination <<<<<<<<<<\n", linecount);
+            if (!comment) printf(" >>>>>>>> line %d: Unexpected comment termination <<<<<<<<<<\n", linecount);
             comment = 0;
 	}
 \n      {linecount++;}

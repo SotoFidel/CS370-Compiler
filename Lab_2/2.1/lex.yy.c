@@ -478,13 +478,23 @@ char *yytext_ptr;
 
             Shaun Cooper
             January 2015
- 
+		
+	    Modified by: Fidel Soto
+	    Date: January 31, 2020
+	    Changes: 
+			*Added a variable (linecount) that will count lines
+			from the input (comment.tst in this case) whenever
+			a newline is detected  and, if there's an error on
+			that line, an errror will be printed.
+			*set 'debug' to true (1) to see the output of said error messages
+			*Got rid of some code that printed every other character, which
+			got in the way of the actual error print statements.
          */
         int comment = 0;
         int debug = 1;  /* prints out debug statements if desired */
         int linecount = 1;
-#line 486 "lex.yy.c"
-#line 487 "lex.yy.c"
+#line 496 "lex.yy.c"
+#line 497 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -701,10 +711,10 @@ YY_DECL
 		}
 
 	{
-#line 17 "lab2remove.l"
+#line 27 "lab2remove.l"
 
 
-#line 707 "lex.yy.c"
+#line 717 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -773,7 +783,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 19 "lab2remove.l"
+#line 29 "lab2remove.l"
 {
 	if (comment && debug) fprintf(stderr,
 		" >>>>>>>> line %d: Possible Nested comment <<<<<<<<<<\n", linecount);
@@ -782,29 +792,29 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 25 "lab2remove.l"
+#line 35 "lab2remove.l"
 {
-            if (!comment) printf(" >>>>>>>> line %d: Unexpexted comment termination <<<<<<<<<<\n", linecount);
+            if (!comment) printf(" >>>>>>>> line %d: Unexpected comment termination <<<<<<<<<<\n", linecount);
             comment = 0;
 	}
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 29 "lab2remove.l"
+#line 39 "lab2remove.l"
 {linecount++;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 30 "lab2remove.l"
+#line 40 "lab2remove.l"
 ;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 31 "lab2remove.l"
+#line 41 "lab2remove.l"
 ECHO;
 	YY_BREAK
-#line 807 "lex.yy.c"
+#line 817 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1821,7 +1831,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 31 "lab2remove.l"
+#line 41 "lab2remove.l"
 
 
 int yywrap(void)

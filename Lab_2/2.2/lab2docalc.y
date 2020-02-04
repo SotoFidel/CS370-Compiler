@@ -24,6 +24,15 @@
 
    problems  fix unary minus, fix parenthesis, add multiplication
    problems  make it so that verbose is on and off with an input argument instead of compiled in
+   
+   Modified by: Fidel Soto
+   February 3, 2019
+   Changes: 
+	    *In the lex file, a parentheses are now returned so now there's no more syntax errors.
+	    *The first 'expr' in 'expr '-' expr %prec MINUS was removed. Since the operator is unary,
+	     it doesn't make sense that there's a left hand 'expr'
+	    *Added a rule for multiplication at lines 88-89 which will multiple the left hand and right 
+	     hand sides.
 */
 
 
@@ -91,7 +100,7 @@ expr	:	'(' expr ')'
 			{ $$ = -$2; }
 	|	VARIABLE
 			{ $$ = regs[$1]; fprintf(stderr,"found a variable value = %d\n",regs[$1]); }
-	|	INTEGER {$$=$1; fprintf(stderr,"found an integer\n");}
+	|	INTEGER {$$=$1; fprintf(stderr,"found an integer\n"); }
 	;
 
 

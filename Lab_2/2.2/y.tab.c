@@ -93,6 +93,15 @@
 
    problems  fix unary minus, fix parenthesis, add multiplication
    problems  make it so that verbose is on and off with an input argument instead of compiled in
+   
+   Modified by: Fidel Soto
+   February 3, 2019
+   Changes: 
+	    *In the lex file, a parentheses are now returned so now there's no more syntax errors.
+	    *The first 'expr' in 'expr '-' expr %prec MINUS was removed. Since the operator is unary,
+	     it doesn't make sense that there's a left hand 'expr'
+	    *Added a rule for multiplication at lines 88-89 which will multiple the left hand and right 
+	     hand sides.
 */
 
 
@@ -112,7 +121,7 @@ void yyerror (s)  /* Called by yyparse on error */
 
 
 
-#line 116 "y.tab.c"
+#line 125 "y.tab.c"
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
@@ -466,8 +475,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    62,    62,    63,    64,    68,    70,    74,    76,    78,
-      80,    82,    84,    86,    88,    90,    92,    94
+       0,    71,    71,    72,    73,    77,    79,    83,    85,    87,
+      89,    91,    93,    95,    97,    99,   101,   103
 };
 #endif
 
@@ -1268,91 +1277,91 @@ yyreduce:
   switch (yyn)
     {
   case 4:
-#line 65 "lab2docalc.y"
+#line 74 "lab2docalc.y"
     { yyerrok; }
-#line 1274 "y.tab.c"
+#line 1283 "y.tab.c"
     break;
 
   case 5:
-#line 69 "lab2docalc.y"
+#line 78 "lab2docalc.y"
     { fprintf(stderr,"the anwser is %d\n", yyvsp[0]); }
-#line 1280 "y.tab.c"
+#line 1289 "y.tab.c"
     break;
 
   case 6:
-#line 71 "lab2docalc.y"
+#line 80 "lab2docalc.y"
     { regs[yyvsp[-2]] = yyvsp[0]; }
-#line 1286 "y.tab.c"
+#line 1295 "y.tab.c"
     break;
 
   case 7:
-#line 75 "lab2docalc.y"
+#line 84 "lab2docalc.y"
     { yyval = yyvsp[-1]; }
-#line 1292 "y.tab.c"
+#line 1301 "y.tab.c"
     break;
 
   case 8:
-#line 77 "lab2docalc.y"
+#line 86 "lab2docalc.y"
     { yyval = yyvsp[-2] - yyvsp[0]; }
-#line 1298 "y.tab.c"
+#line 1307 "y.tab.c"
     break;
 
   case 9:
-#line 79 "lab2docalc.y"
+#line 88 "lab2docalc.y"
     { yyval = yyvsp[-2] + yyvsp[0]; }
-#line 1304 "y.tab.c"
+#line 1313 "y.tab.c"
     break;
 
   case 10:
-#line 81 "lab2docalc.y"
+#line 90 "lab2docalc.y"
     { yyval = yyvsp[-2] * yyvsp[0]; }
-#line 1310 "y.tab.c"
+#line 1319 "y.tab.c"
     break;
 
   case 11:
-#line 83 "lab2docalc.y"
+#line 92 "lab2docalc.y"
     { yyval = yyvsp[-2] / yyvsp[0]; }
-#line 1316 "y.tab.c"
+#line 1325 "y.tab.c"
     break;
 
   case 12:
-#line 85 "lab2docalc.y"
+#line 94 "lab2docalc.y"
     { yyval = yyvsp[-2] % yyvsp[0]; }
-#line 1322 "y.tab.c"
+#line 1331 "y.tab.c"
     break;
 
   case 13:
-#line 87 "lab2docalc.y"
+#line 96 "lab2docalc.y"
     { yyval = yyvsp[-2] & yyvsp[0]; }
-#line 1328 "y.tab.c"
+#line 1337 "y.tab.c"
     break;
 
   case 14:
-#line 89 "lab2docalc.y"
+#line 98 "lab2docalc.y"
     { yyval = yyvsp[-2] | yyvsp[0]; }
-#line 1334 "y.tab.c"
+#line 1343 "y.tab.c"
     break;
 
   case 15:
-#line 91 "lab2docalc.y"
+#line 100 "lab2docalc.y"
     { yyval = -yyvsp[0]; }
-#line 1340 "y.tab.c"
+#line 1349 "y.tab.c"
     break;
 
   case 16:
-#line 93 "lab2docalc.y"
+#line 102 "lab2docalc.y"
     { yyval = regs[yyvsp[0]]; fprintf(stderr,"found a variable value = %d\n",regs[yyvsp[0]]); }
-#line 1346 "y.tab.c"
+#line 1355 "y.tab.c"
     break;
 
   case 17:
-#line 94 "lab2docalc.y"
-    {yyval=yyvsp[0]; fprintf(stderr,"found an integer\n");}
-#line 1352 "y.tab.c"
+#line 103 "lab2docalc.y"
+    {yyval=yyvsp[0]; fprintf(stderr,"found an integer\n"); }
+#line 1361 "y.tab.c"
     break;
 
 
-#line 1356 "y.tab.c"
+#line 1365 "y.tab.c"
 
       default: break;
     }
@@ -1584,7 +1593,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 99 "lab2docalc.y"
+#line 108 "lab2docalc.y"
 	/* end of rules, start of program */
 
 int main()
