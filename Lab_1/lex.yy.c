@@ -487,7 +487,7 @@ char *yytext_ptr;
                 *Added a print statement to the yywrap() function that will tell the usert how many numbers there are in the input
    */
 	int lgths[100];
-	int numCounter = 0;
+	int numCounter = 1;
 #line 491 "lex.yy.c"
 
 #define INITIAL 0
@@ -705,7 +705,7 @@ YY_DECL
 		}
 
 	{
-#line 22 "wordlengthlab1.l"
+#line 23 "wordlengthlab1.l"
 
 #line 710 "lex.yy.c"
 
@@ -776,25 +776,25 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 23 "wordlengthlab1.l"
+#line 24 "wordlengthlab1.l"
 lgths[yyleng]++;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 24 "wordlengthlab1.l"
+#line 25 "wordlengthlab1.l"
 { numCounter++; }
 	YY_BREAK
 case 3:
-#line 26 "wordlengthlab1.l"
+#line 27 "wordlengthlab1.l"
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 26 "wordlengthlab1.l"
+#line 27 "wordlengthlab1.l"
 ;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 27 "wordlengthlab1.l"
+#line 28 "wordlengthlab1.l"
 ECHO;
 	YY_BREAK
 #line 800 "lex.yy.c"
@@ -1814,7 +1814,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 27 "wordlengthlab1.l"
+#line 28 "wordlengthlab1.l"
 
 int yywrap()
 {
@@ -1834,7 +1834,8 @@ int yywrap()
 }
 
 int main()
-{  yylex();
+{
+ yylex();
 
 }
 

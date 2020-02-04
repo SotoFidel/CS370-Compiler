@@ -28,11 +28,13 @@
    Modified by: Fidel Soto
    February 3, 2019
    Changes: 
-	    *In the lex file, a parentheses are now returned so now there's no more syntax errors.
-	    *The first 'expr' in 'expr '-' expr %prec MINUS was removed. Since the operator is unary,
+	    *In the lex file, a parentheses are now returned so now there's no more syntax errors.Now
+	     the the YACC file will successfully take the parenthesis input from the LEX file.
+	    *The unary minus problem in lines 101-102 was fixed. The first 'expr' in 
+	     'expr '-' expr %prec MINUS' was removed. Since the operator is unary,
 	     it doesn't make sense that there's a left hand 'expr'
-	    *Added a rule for multiplication at lines 88-89 which will multiple the left hand and right 
-	     hand sides.
+	    *Added a rule for multiplication at lines 91-92  which will multiple the left hand ($1)
+	     and right hand ($3) sides.
 */
 
 

@@ -17,7 +17,8 @@
                 *Added a print statement to the yywrap() function that will tell the usert how many numbers there are in the input
    */
 	int lgths[100];
-	int numCounter = 0;
+	int numCounter = 1;
+
 %%
 [a-zA-Z]+	lgths[yyleng]++;
 [0-9]+      { numCounter++; }

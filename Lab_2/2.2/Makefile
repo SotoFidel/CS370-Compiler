@@ -6,6 +6,11 @@
 #
 #
 
+#Answers to the questions:
+#	1)The files created by YACC are y.tab.c and y.tab.h
+#	2)The file created by LEX is lex.yy.c
+#	3)We do not compile LEX output directly because
+
 #Produces the final output for the lab.
 #Dependency: lab2_2, which produces lab2docalc.o
 all:		lab2_2

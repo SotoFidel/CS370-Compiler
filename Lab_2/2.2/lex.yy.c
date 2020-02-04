@@ -487,12 +487,12 @@ char *yytext_ptr;
 		  Changes:
 			  *Added a lex directive for when a parenthesis '(' or ')'
 			  are detected. The c code accompanying the directive
-			  prints the lex file and returns the character to the
+			  prints the lex file and outputs  the character to the
 			  yacc file. Lines 36-37
 */
 
 
-int mydebug=1;
+int mydebug=0;
 #include "y.tab.h"
 #line 497 "lex.yy.c"
 #line 498 "lex.yy.c"

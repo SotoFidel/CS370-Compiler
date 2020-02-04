@@ -97,11 +97,13 @@
    Modified by: Fidel Soto
    February 3, 2019
    Changes: 
-	    *In the lex file, a parentheses are now returned so now there's no more syntax errors.
-	    *The first 'expr' in 'expr '-' expr %prec MINUS was removed. Since the operator is unary,
+	    *In the lex file, a parentheses are now returned so now there's no more syntax errors.Now
+	     the the YACC file will successfully take the parenthesis input from the LEX file.
+	    *The unary minus problem in lines 101-102 was fixed. The first 'expr' in 
+	     'expr '-' expr %prec MINUS' was removed. Since the operator is unary,
 	     it doesn't make sense that there's a left hand 'expr'
-	    *Added a rule for multiplication at lines 88-89 which will multiple the left hand and right 
-	     hand sides.
+	    *Added a rule for multiplication at lines 91-92  which will multiple the left hand ($1)
+	     and right hand ($3) sides.
 */
 
 
@@ -121,7 +123,7 @@ void yyerror (s)  /* Called by yyparse on error */
 
 
 
-#line 125 "y.tab.c"
+#line 127 "y.tab.c"
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
@@ -475,8 +477,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    71,    71,    72,    73,    77,    79,    83,    85,    87,
-      89,    91,    93,    95,    97,    99,   101,   103
+       0,    73,    73,    74,    75,    79,    81,    85,    87,    89,
+      91,    93,    95,    97,    99,   101,   103,   105
 };
 #endif
 
@@ -1277,91 +1279,91 @@ yyreduce:
   switch (yyn)
     {
   case 4:
-#line 74 "lab2docalc.y"
+#line 76 "lab2docalc.y"
     { yyerrok; }
-#line 1283 "y.tab.c"
+#line 1285 "y.tab.c"
     break;
 
   case 5:
-#line 78 "lab2docalc.y"
+#line 80 "lab2docalc.y"
     { fprintf(stderr,"the anwser is %d\n", yyvsp[0]); }
-#line 1289 "y.tab.c"
+#line 1291 "y.tab.c"
     break;
 
   case 6:
-#line 80 "lab2docalc.y"
+#line 82 "lab2docalc.y"
     { regs[yyvsp[-2]] = yyvsp[0]; }
-#line 1295 "y.tab.c"
+#line 1297 "y.tab.c"
     break;
 
   case 7:
-#line 84 "lab2docalc.y"
+#line 86 "lab2docalc.y"
     { yyval = yyvsp[-1]; }
-#line 1301 "y.tab.c"
+#line 1303 "y.tab.c"
     break;
 
   case 8:
-#line 86 "lab2docalc.y"
+#line 88 "lab2docalc.y"
     { yyval = yyvsp[-2] - yyvsp[0]; }
-#line 1307 "y.tab.c"
+#line 1309 "y.tab.c"
     break;
 
   case 9:
-#line 88 "lab2docalc.y"
+#line 90 "lab2docalc.y"
     { yyval = yyvsp[-2] + yyvsp[0]; }
-#line 1313 "y.tab.c"
+#line 1315 "y.tab.c"
     break;
 
   case 10:
-#line 90 "lab2docalc.y"
+#line 92 "lab2docalc.y"
     { yyval = yyvsp[-2] * yyvsp[0]; }
-#line 1319 "y.tab.c"
+#line 1321 "y.tab.c"
     break;
 
   case 11:
-#line 92 "lab2docalc.y"
+#line 94 "lab2docalc.y"
     { yyval = yyvsp[-2] / yyvsp[0]; }
-#line 1325 "y.tab.c"
+#line 1327 "y.tab.c"
     break;
 
   case 12:
-#line 94 "lab2docalc.y"
+#line 96 "lab2docalc.y"
     { yyval = yyvsp[-2] % yyvsp[0]; }
-#line 1331 "y.tab.c"
+#line 1333 "y.tab.c"
     break;
 
   case 13:
-#line 96 "lab2docalc.y"
+#line 98 "lab2docalc.y"
     { yyval = yyvsp[-2] & yyvsp[0]; }
-#line 1337 "y.tab.c"
+#line 1339 "y.tab.c"
     break;
 
   case 14:
-#line 98 "lab2docalc.y"
+#line 100 "lab2docalc.y"
     { yyval = yyvsp[-2] | yyvsp[0]; }
-#line 1343 "y.tab.c"
+#line 1345 "y.tab.c"
     break;
 
   case 15:
-#line 100 "lab2docalc.y"
+#line 102 "lab2docalc.y"
     { yyval = -yyvsp[0]; }
-#line 1349 "y.tab.c"
+#line 1351 "y.tab.c"
     break;
 
   case 16:
-#line 102 "lab2docalc.y"
+#line 104 "lab2docalc.y"
     { yyval = regs[yyvsp[0]]; fprintf(stderr,"found a variable value = %d\n",regs[yyvsp[0]]); }
-#line 1355 "y.tab.c"
+#line 1357 "y.tab.c"
     break;
 
   case 17:
-#line 103 "lab2docalc.y"
+#line 105 "lab2docalc.y"
     {yyval=yyvsp[0]; fprintf(stderr,"found an integer\n"); }
-#line 1361 "y.tab.c"
+#line 1363 "y.tab.c"
     break;
 
 
-#line 1365 "y.tab.c"
+#line 1367 "y.tab.c"
 
       default: break;
     }
@@ -1593,7 +1595,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 108 "lab2docalc.y"
+#line 110 "lab2docalc.y"
 	/* end of rules, start of program */
 
 int main()
