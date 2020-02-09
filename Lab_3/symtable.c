@@ -213,7 +213,7 @@
             else
             {
                 q=p->next; /*delete Anything in between case */
-                while(strcmp(q->label,l)!=0)
+                while(strcmp(q->label,l)!=0) /*Find the node based on the label*/
                 {
                     p=p->next;
                     q=q->next;
