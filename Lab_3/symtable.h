@@ -11,7 +11,7 @@ void Insert();
 void Display();
 void Delete();
 
-int Search(char lab[]);void Modify();
+int Search(char label[]);void Modify();
 struct SymbTab
 {
     char label[10],symbol[10];
