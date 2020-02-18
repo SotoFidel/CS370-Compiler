@@ -19,7 +19,7 @@
 */
 
 
-int mydebug=1;
+int mydebug=0;
 #include "y.tab.h"
 %}
 

@@ -466,7 +466,7 @@ char *yytext;
 */
 
 
-int mydebug=1;
+int mydebug=0;
 #include "y.tab.h"
 #line 472 "lex.yy.c"
 #line 473 "lex.yy.c"

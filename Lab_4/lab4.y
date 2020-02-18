@@ -93,10 +93,10 @@ DECLS   : DEC DECLS
 
 DEC     :   INT VARIABLE ';' '\n'
             { 
-				fprintf(stderr, "Declaration Detected\n");
+				// fprintf(stderr, "Declaration Detected\n");
 				if (Search($2) == 0) {
 					if ((offset) == REGSMAX) {
-						fprintf(stderr, "Error. Max Variable Limit Reached");
+						fprintf(stderr, "Error. Max Variable Limit Reached\n");
 					} else {
 						Insert($2, offset++);
 					}
@@ -114,7 +114,7 @@ list	:	/* empty */
 
 stat	:	expr
 			{ fprintf(stderr,"the anwser is %d\n", $1); }
-	|	VARIABLE '=' expr ';' '\n'
+	|	VARIABLE '=' expr ';'
 			{ 
 				if (Search($1) != 1) {
 					fprintf(stderr, "Error. Variable has not been declared.\n");

@@ -442,7 +442,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  6
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   66
+#define YYLAST   65
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  19
@@ -451,7 +451,7 @@ union yyalloc
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  21
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  42
+#define YYNSTATES  41
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
@@ -544,7 +544,7 @@ static const yytype_int8 yypact[] =
       10,   -14,    -6,    17,    17,    41,    52,   -14,   -14,    17,
      -14,   -14,    30,   -14,    17,    17,    17,    17,    17,    17,
       17,    43,   -14,    21,    35,    -8,    -8,   -14,   -14,   -14,
-      50,   -14
+     -14
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -556,13 +556,13 @@ static const yytype_uint8 yydefact[] =
        0,    21,    20,     0,     0,     0,     9,     5,     8,     0,
       20,    19,     0,     7,     0,     0,     0,     0,     0,     0,
        0,     0,    11,    18,    17,    13,    12,    14,    15,    16,
-       0,    10
+      10
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -14,   -14,    62,   -14,   -14,   -14,   -13
+     -14,   -14,    61,   -14,   -14,   -14,   -13
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -582,7 +582,7 @@ static const yytype_int8 yytable[] =
       27,    28,    29,    30,    14,    14,    24,    25,    26,    27,
       28,    29,    30,    26,    27,    28,    29,    30,    32,    24,
       25,    26,    27,    28,    29,    30,    23,    40,    24,    25,
-      26,    27,    28,    29,    30,    41,     8
+      26,    27,    28,    29,    30,     8
 };
 
 static const yytype_uint8 yycheck[] =
@@ -593,7 +593,7 @@ static const yytype_uint8 yycheck[] =
        9,    10,    11,    12,    17,    17,     6,     7,     8,     9,
       10,    11,    12,     8,     9,    10,    11,    12,    18,     6,
        7,     8,     9,    10,    11,    12,    15,    14,     6,     7,
-       8,     9,    10,    11,    12,    15,     4
+       8,     9,    10,    11,    12,     4
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -604,7 +604,7 @@ static const yytype_uint8 yystos[] =
        1,     3,     5,     9,    17,    24,    25,    15,    15,    16,
        5,    25,    25,    15,     6,     7,     8,     9,    10,    11,
       12,    25,    18,    25,    25,    25,    25,    25,    25,    25,
-      14,    15
+      14
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -619,7 +619,7 @@ static const yytype_uint8 yyr1[] =
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     2,     2,     0,     4,     0,     3,     3,     1,
-       5,     3,     3,     3,     3,     3,     3,     3,     3,     2,
+       4,     3,     3,     3,     3,     3,     3,     3,     3,     2,
        1,     1
 };
 
@@ -1299,10 +1299,10 @@ yyreduce:
         case 5:
 #line 95 "lab4.y" /* yacc.c:1646  */
     { 
-				fprintf(stderr, "Declaration Detected\n");
+				// fprintf(stderr, "Declaration Detected\n");
 				if (Search((yyvsp[-2]. typeString )) == 0) {
 					if ((offset) == REGSMAX) {
-						fprintf(stderr, "Error. Max Variable Limit Reached");
+						fprintf(stderr, "Error. Max Variable Limit Reached\n");
 					} else {
 						Insert((yyvsp[-2]. typeString ), offset++);
 					}
@@ -1328,11 +1328,11 @@ yyreduce:
   case 10:
 #line 118 "lab4.y" /* yacc.c:1646  */
     { 
-				if (Search((yyvsp[-4]. typeString )) != 1) {
+				if (Search((yyvsp[-3]. typeString )) != 1) {
 					fprintf(stderr, "Error. Variable has not been declared.\n");
 				} else {
 					//fprintf(stderr, "Assignment of existing Variable detected \n");
-					regs[fetchAddress((yyvsp[-4]. typeString ))] = (yyvsp[-2]. typeInt ); 
+					regs[fetchAddress((yyvsp[-3]. typeString ))] = (yyvsp[-1]. typeInt ); 
 					//fprintf(stderr, "Value of %s is now %d\n", $1, regs[fetchAddress($1)]);
 				}
 			}
