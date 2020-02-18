@@ -17,46 +17,6 @@
 
     int size=0;
     struct SymbTab *first,*last;
-//     void main()
-//     {
-//         int optionInput,searchResult;   /** op = operation  -------  y = search result **/
-//         char label[10];
-//         do
-//         {
-//             printf("\n\tSYMBOL TABLE IMPLEMENTATION\n");
-//             printf("\n\t1.INSERT\n\t2.DISPLAY\n\t3.DELETE\n\t4.SEARCH\n\t5.MODIFY\n\t6.END\n");
-//             printf("\n\tEnter your option : ");
-//             scanf("%d",&optionInput); /** Scan an integer and store it into 'op' memory location**/
-//             switch(optionInput)
-//             {
-//                 case 1:
-//                     Insert();
-//                     break;
-//                 case 2:
-//                     Display();
-//                     break;
-//                 case 3:
-//                     Delete();
-//                     break;
-//                 case 4:
-//                     printf("\n\tEnter the label to be searched : ");
-//                     scanf("%s",label); /**Scan a string and store each character of said string into 'la'**/
-//                     searchResult=Search(label);
-//                     printf("\n\tSearch Result:");
-//                     if(searchResult==1)
-//                         printf("\n\tThe label is present in the symbol table\n");
-//                     else
-//                         printf("\n\tThe label is not present in the symbol table\n");
-//                     break;
-//                 case 5:
-//                     Modify();
-//                     break;
-//                 case 6:
-//                     exit(0);
-//             }
-//         } while(optionInput<6); /** exit if invalid input **/
-//         
-//     }  /* and of main */
     
     void Insert(char *symbolParam, int offsetParam)
     {
