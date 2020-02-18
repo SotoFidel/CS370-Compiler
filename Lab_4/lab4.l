@@ -26,10 +26,10 @@ int mydebug=1;
 
 %%
 int             { return (INT); }
-([a-zA-Z])([a-zA-Z0-9])*	{if (mydebug) fprintf(stderr,"Variable found: %s \n", yytext); 
+[a-zA-Z][a-zA-Z0-9]*	{if (mydebug) fprintf(stderr,"Variable found: %s \n", yytext); 
                        yylval.typeString = strdup(yytext); return(VARIABLE);}
 [0-9][0-9]*	{if (mydebug) fprintf(stderr,"Number found\n"); 
-                       yylval.typeInt=atoi((const char *)yytext); return(INTEGER);}
+                       yylval.typeInt = atoi( ( const char * )yytext ); return(INTEGER);}
 [ \t]		{if (mydebug) fprintf(stderr,"Whitespace found\n");}
 [=\-+*/%&|;] 	{ if (mydebug) fprintf(stderr,"return a token %c\n",*yytext); 
                        return (*yytext);}

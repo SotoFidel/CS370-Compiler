@@ -45,7 +45,9 @@ int yylex();
 #include <ctype.h>
 #include "symtable.h"
 
-int regs[26];
+#define REGSMAX 30
+
+int regs[REGSMAX];
 int base, debugsw;
 int offset = 0;
 
@@ -90,9 +92,18 @@ DECLS   : DEC DECLS
         ;
 
 DEC     :   INT VARIABLE ';' '\n'
-            { fprintf(stderr, "Declaration Detected\n"); /*Insert($2)*/ }
-    |   INT VARIABLE '=' expr ';' '\n'
-            { fprintf(stderr, "Assignment Detected \n"); /*Insert($2)*/ }
+            { 
+				fprintf(stderr, "Declaration Detected\n");
+				if (Search($2) == 0) {
+					if ((offset) == REGSMAX) {
+						fprintf(stderr, "Error. Max Variable Limit Reached");
+					} else {
+						Insert($2, offset++);
+					}
+				} else {
+					fprintf(stderr, "Error. Variable already declared\n");
+				}
+			}
         ;
 
 list	:	/* empty */
@@ -103,8 +114,16 @@ list	:	/* empty */
 
 stat	:	expr
 			{ fprintf(stderr,"the anwser is %d\n", $1); }
-	|	VARIABLE '=' expr
-			{ regs[$1] = $3; }
+	|	VARIABLE '=' expr ';' '\n'
+			{ 
+				if (Search($1) != 1) {
+					fprintf(stderr, "Error. Variable has not been declared.\n");
+				} else {
+					//fprintf(stderr, "Assignment of existing Variable detected \n");
+					regs[fetchAddress($1)] = $3; 
+					//fprintf(stderr, "Value of %s is now %d\n", $1, regs[fetchAddress($1)]);
+				}
+			}
 	;
 
 expr	:	'(' expr ')'
@@ -126,7 +145,7 @@ expr	:	'(' expr ')'
 	|	'-' expr	%prec UMINUS
 			{ $$ = -$2; }
 	|	VARIABLE
-			{ $$ = regs[$1]; fprintf(stderr,"found a variable value = %d\n",regs[$1]); }
+			{ $$ = regs[fetchAddress($1)]; fprintf(stderr,"found a variable value = %d\n",regs[fetchAddress($1)]); }
 	|	INTEGER {$$=$1; fprintf(stderr,"found an integer\n"); }
 	;
 

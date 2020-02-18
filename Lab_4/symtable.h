@@ -7,15 +7,16 @@
 #ifndef SYMBTAB
 #define SYMBTAB
 
-void Insert();
+void Insert(char *symbolParam, int offsetParam);
 void Display();
 void Delete();
+void Modify();
 
-int fetchAddress(char *label);
-int Search(char label[]);void Modify();
+int fetchAddress(char *symbolParam);
+int Search(char *symbolParam);
 struct SymbTab
 {
-    char label[10],symbol[10];
+    char *symbol;
     int addr;
     struct SymbTab *next;
 };
