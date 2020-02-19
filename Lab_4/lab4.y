@@ -50,6 +50,7 @@ int yylex();
 int regs[REGSMAX];
 int base, debugsw;
 int offset = 0;
+int errFlag = 0;
 
 
 
@@ -113,7 +114,16 @@ list	:	/* empty */
 	;
 
 stat	:	expr
-			{ fprintf(stderr,"the anwser is %d\n", $1); }
+			{
+				if (errFlag == 1) 
+				{
+					errFlag = 0;
+				}
+				else 
+				{
+					fprintf(stderr,"the anwser is %d\n", $1);
+				}
+			}
 	|	VARIABLE '=' expr ';'
 			{ 
 				if (Search($1) != 1) {
@@ -145,8 +155,20 @@ expr	:	'(' expr ')'
 	|	'-' expr	%prec UMINUS
 			{ $$ = -$2; }
 	|	VARIABLE
-			{ $$ = regs[fetchAddress($1)]; fprintf(stderr,"found a variable value = %d\n",regs[fetchAddress($1)]); }
-	|	INTEGER {$$=$1; fprintf(stderr,"found an integer\n"); }
+			{ 
+				if (Search($1)!= 1) 
+				{
+					fprintf(stderr, "WARNING: Variable %s  has not been declared.\n", $1);
+					errFlag = 1;
+				}
+				else
+				{ 
+					$$ = regs[fetchAddress($1)];
+					/*fprintf(stderr,"found a variable value = %d\n",regs[fetchAddress($1)])*/;
+				}
+			}
+	|	INTEGER {$$=$1;/* fprintf(stderr,"found an integer\n")*/;
+		        }
 	;
 
 

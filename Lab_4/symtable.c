@@ -39,7 +39,7 @@
             last=newEntry;
         }
         size++;
-        Display();
+        /*Display();*/
     }
     
     void Display()
