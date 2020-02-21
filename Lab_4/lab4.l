@@ -16,6 +16,12 @@
 			  are detected. The c code accompanying the directive
 			  prints the lex file and outputs  the character to the
 			  yacc file. Lines 36-37
+			  
+          February 21, 2020
+          Changes:
+              *Added rule for ';'
+              *Added rule for int so that it returns INT
+              *Modified variable rule so that it can be a longer word
 */
 
 

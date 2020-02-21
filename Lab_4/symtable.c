@@ -28,7 +28,7 @@
         newEntry->addr = offsetParam;
         newEntry->next=NULL;
 
-        if(size==0) 
+        if (size==0) 
         {
             first=newEntry;
             last=newEntry;
@@ -59,9 +59,9 @@
         int flag=0;
         struct SymbTab *searchCursor;
         searchCursor=first;
-        for(int i=0;i<size;i++)
+        for(int i=0 ; i<size ; i++)
         {
-            if(strcmp(searchCursor->symbol,symbolParam)==0) /*Compare p->label and lab[]*/
+            if(strcmp(searchCursor->symbol,symbolParam)==0) /*Compare searchCursor->label and symbolParam*/
                 flag=1;
             searchCursor=searchCursor->next;
         }
@@ -78,6 +78,9 @@
             }
             cursor = cursor->next;
         }
+        
+        //This check is done in the front end Yacc, so if this
+        //side can't find it, then something wen't horribly wrong.
         fprintf(stderr, "FATAL ERROR: This Variable was not declared\n");
         exit(1);
     }

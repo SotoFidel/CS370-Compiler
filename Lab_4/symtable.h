@@ -11,9 +11,9 @@ void Insert(char *symbolParam, int offsetParam);
 void Display();
 void Delete();
 void Modify();
-
 int fetchAddress(char *symbolParam);
 int Search(char *symbolParam);
+
 struct SymbTab
 {
     char *symbol;

@@ -65,7 +65,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 69 "lab4.y"
+#line 76 "lab4.y"
 
     int typeInt;
     char *typeString;
