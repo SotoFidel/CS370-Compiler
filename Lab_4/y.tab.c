@@ -105,6 +105,7 @@
 	    *Added a rule for multiplication at lines 91-92  which will multiple the left hand ($1)
 	     and right hand ($3) sides.
 	     
+    
     February 21, 2020
     Changes:
         *Added conditionals in the YACC side to make sure that 
@@ -138,7 +139,7 @@ void yyerror (s)  /* Called by yyparse on error */
 
 
 
-#line 142 "y.tab.c"
+#line 143 "y.tab.c"
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
@@ -193,12 +194,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 76 "lab4.y"
+#line 77 "lab4.y"
 
     int typeInt;
     char *typeString;
 
-#line 202 "y.tab.c"
+#line 203 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -504,9 +505,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    95,    95,    98,    99,   102,   120,   121,   122,   126,
-     140,   154,   156,   158,   160,   162,   164,   166,   168,   170,
-     172,   186
+       0,    96,    96,    99,   100,   103,   121,   122,   123,   127,
+     141,   153,   155,   157,   159,   161,   163,   165,   167,   169,
+     171,   185
 };
 #endif
 
@@ -1313,7 +1314,7 @@ yyreduce:
   switch (yyn)
     {
   case 5:
-#line 103 "lab4.y"
+#line 104 "lab4.y"
     { 
 				if (Search((yyvsp[-2]. typeString )) == 0) {
                     //Variable wasn't declared, so it can be declared.
@@ -1329,17 +1330,17 @@ yyreduce:
 					fprintf(stderr, "Error. Variable already declared\n");
 				}
 			}
-#line 1333 "y.tab.c"
+#line 1334 "y.tab.c"
     break;
 
   case 8:
-#line 123 "lab4.y"
+#line 124 "lab4.y"
     { yyerrok; }
-#line 1339 "y.tab.c"
+#line 1340 "y.tab.c"
     break;
 
   case 9:
-#line 127 "lab4.y"
+#line 128 "lab4.y"
     {
                 //Added this conditional to make sure that an erronous 
                 //answer isn't printed when an Undeclared variable 
@@ -1353,107 +1354,105 @@ yyreduce:
 					fprintf(stderr,"the anwser is %d\n", (yyvsp[0]. typeInt ));
 				}
 			}
-#line 1357 "y.tab.c"
+#line 1358 "y.tab.c"
     break;
 
   case 10:
-#line 141 "lab4.y"
+#line 142 "lab4.y"
     { 
 				if (Search((yyvsp[-3]. typeString )) != 1) {
                     //Variable was not declared. Error.
 					fprintf(stderr, "Error. Variable has not been declared.\n");
 				} else {
                     //Declared variable's address is set to the 'expr' on the right side.
-					//fprintf(stderr, "Assignment of existing Variable detected \n");
 					regs[fetchAddress((yyvsp[-3]. typeString ))] = (yyvsp[-1]. typeInt ); 
-					//fprintf(stderr, "Value of %s is now %d\n", $1, regs[fetchAddress($1)]);
 				}
 			}
-#line 1373 "y.tab.c"
+#line 1372 "y.tab.c"
     break;
 
   case 11:
-#line 155 "lab4.y"
+#line 154 "lab4.y"
     { (yyval. typeInt ) = (yyvsp[-1]. typeInt ); }
-#line 1379 "y.tab.c"
+#line 1378 "y.tab.c"
     break;
 
   case 12:
-#line 157 "lab4.y"
+#line 156 "lab4.y"
     { (yyval. typeInt ) = (yyvsp[-2]. typeInt ) - (yyvsp[0]. typeInt ); }
-#line 1385 "y.tab.c"
+#line 1384 "y.tab.c"
     break;
 
   case 13:
-#line 159 "lab4.y"
+#line 158 "lab4.y"
     { (yyval. typeInt ) = (yyvsp[-2]. typeInt ) + (yyvsp[0]. typeInt ); }
-#line 1391 "y.tab.c"
+#line 1390 "y.tab.c"
     break;
 
   case 14:
-#line 161 "lab4.y"
+#line 160 "lab4.y"
     { (yyval. typeInt ) = (yyvsp[-2]. typeInt ) * (yyvsp[0]. typeInt ); }
-#line 1397 "y.tab.c"
+#line 1396 "y.tab.c"
     break;
 
   case 15:
-#line 163 "lab4.y"
+#line 162 "lab4.y"
     { (yyval. typeInt ) = (yyvsp[-2]. typeInt ) / (yyvsp[0]. typeInt ); }
-#line 1403 "y.tab.c"
+#line 1402 "y.tab.c"
     break;
 
   case 16:
-#line 165 "lab4.y"
+#line 164 "lab4.y"
     { (yyval. typeInt ) = (yyvsp[-2]. typeInt ) % (yyvsp[0]. typeInt ); }
-#line 1409 "y.tab.c"
+#line 1408 "y.tab.c"
     break;
 
   case 17:
-#line 167 "lab4.y"
+#line 166 "lab4.y"
     { (yyval. typeInt ) = (yyvsp[-2]. typeInt ) & (yyvsp[0]. typeInt ); }
-#line 1415 "y.tab.c"
+#line 1414 "y.tab.c"
     break;
 
   case 18:
-#line 169 "lab4.y"
+#line 168 "lab4.y"
     { (yyval. typeInt ) = (yyvsp[-2]. typeInt ) | (yyvsp[0]. typeInt ); }
-#line 1421 "y.tab.c"
+#line 1420 "y.tab.c"
     break;
 
   case 19:
-#line 171 "lab4.y"
+#line 170 "lab4.y"
     { (yyval. typeInt ) = -(yyvsp[0]. typeInt ); }
-#line 1427 "y.tab.c"
+#line 1426 "y.tab.c"
     break;
 
   case 20:
-#line 173 "lab4.y"
+#line 172 "lab4.y"
     { 
 				if (Search((yyvsp[0]. typeString ))!= 1) 
 				{
-                    //Print error and dont set $$. Instead print an error.
+                    //Print error and dont set $$. Instead set errFlag to 1 so that
+                    //in 'expr' the return value isn't printed.
 					fprintf(stderr, "WARNING: Variable %s  has not been declared.\n", (yyvsp[0]. typeString ));
 					errFlag = 1;
 				}
 				else
 				{ 
-					(yyval. typeInt ) = regs[fetchAddress((yyvsp[0]. typeString ))];
-					/*fprintf(stderr,"found a variable value = %d\n",regs[fetchAddress($1)])*/;
+					(yyval. typeInt ) = regs[ fetchAddress((yyvsp[0]. typeString )) ];
 				}
 			}
-#line 1445 "y.tab.c"
+#line 1444 "y.tab.c"
     break;
 
   case 21:
-#line 186 "lab4.y"
+#line 185 "lab4.y"
     {
                     (yyval. typeInt )=(yyvsp[0]. typeInt );
 		        }
-#line 1453 "y.tab.c"
+#line 1452 "y.tab.c"
     break;
 
 
-#line 1457 "y.tab.c"
+#line 1456 "y.tab.c"
 
       default: break;
     }
@@ -1685,7 +1684,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 193 "lab4.y"
+#line 192 "lab4.y"
 	/* end of rules, start of program */
 
 int main()

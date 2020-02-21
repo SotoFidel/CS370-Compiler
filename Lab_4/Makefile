@@ -3,7 +3,7 @@
 #	Makefile
 #	Fidel Soto
 #	February 29, 2020
-#	Compiles the C, Lex, and Yacc files into one executiable (lab4)
+#	Compiles the C, Lex, and Yacc files into one executable (lab4)
 #
 
 all:
