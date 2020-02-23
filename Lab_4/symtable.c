@@ -6,6 +6,11 @@
     ********************S Y M T A B L E     I M P L E M E N T A T I O N********************
     This code is an simple implementation of a symbol table. Each entry has information about
     its label, symbol and address. This code was pulled from https://forgetcode.com/C/101-Symbol-table
+
+    February 21, 2020
+    Changes:
+        *Modified Insert() so that it now takes a string and an int parameter. 
+        *Modified Search() and fetchAddress() so that they now take a string parameter.
 */
 
 #include<stdio.h>
