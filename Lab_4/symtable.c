@@ -66,7 +66,7 @@
         searchCursor=first;
         for(int i=0 ; i<size ; i++)
         {
-            if(strcmp(searchCursor->symbol,symbolParam)==0) /*Compare searchCursor->label and symbolParam*/
+            if(strcmp(searchCursor->symbol,symbolParam)==0) /*Compare searchCursor->symbol and symbolParam*/
                 flag=1;
             searchCursor=searchCursor->next;
         }
