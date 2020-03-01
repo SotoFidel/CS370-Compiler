@@ -60,9 +60,8 @@ params             :   VOID
             |   paramsList
             ;
             
-paramsList         : /* Empty */
+paramsList         : param
             |   param ',' paramsList
-            |   param
             ;
             
 param              :    typeSpecifier ID '[' ']'

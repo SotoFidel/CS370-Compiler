@@ -519,7 +519,7 @@ char *yytext_ptr;
 #line 1 "Lab5.l"
 #line 2 "Lab5.l"
     #include "y.tab.h"
-    
+    #include <stdio.h>
     int lineCount = 1;
     int myDebug = 1;
 #line 525 "lex.yy.c"
@@ -940,31 +940,32 @@ case 26:
 YY_RULE_SETUP
 #line 36 "Lab5.l"
 { yylval.typeInt = atoi( (const char *)yytext);
+                          fprintf(stderr, "Constant found with value %d\n", yylval.typeInt);
                           return (NUM); 
                         }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 39 "Lab5.l"
+#line 40 "Lab5.l"
 { return (*yytext);  }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 40 "Lab5.l"
+#line 41 "Lab5.l"
 {}
 	YY_BREAK
 case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
-#line 41 "Lab5.l"
+#line 42 "Lab5.l"
 { lineCount++; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 42 "Lab5.l"
+#line 43 "Lab5.l"
 ECHO;
 	YY_BREAK
-#line 967 "lex.yy.c"
+#line 968 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1981,7 +1982,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 42 "Lab5.l"
+#line 43 "Lab5.l"
 
 
 int yywrap()
