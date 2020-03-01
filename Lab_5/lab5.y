@@ -1,15 +1,16 @@
 %{
-    // #include <stdio.h>
-    // #include <ctype.h>
-    // #include "lex.yy.c"
+    int yylex();
+    
+    #include <stdio.h>
+    #include <ctype.h>
+    
+    extern int lineCount;
     
     void yyerror (s)  /* Called by yyparse on error */
      char *s;
     {
-        printf ("%s\n", s);
+        printf ("%s on line %d\n", s, lineCount);
     }
-    
-    int lineCount;
 
 %}
 
@@ -29,43 +30,56 @@
 
 program            :   declarationList
             ;
-declarationList    :   /* Empty*/
+            
+declarationList    :  declaration
             |   declaration declarationList
             ;
+            
 declaration        :   varDeclaration
             |   funDeclaration
             ;
+            
 varDeclaration     :   typeSpecifier varList ';'
             ;
+            
 varList            :    ID
             |   ID '[' NUM ']'
             |   ID ',' varList
             |   ID '[' NUM ']' ',' varList
             ;
+            
 typeSpecifier      :   INT
             |   VOID
             |   BOOL
             ;
+            
 funDeclaration     :   typeSpecifier ID '(' params ')' compoundStatement
             ;
+            
 params             :   VOID
             |   paramsList
             ;
+            
 paramsList         : /* Empty */
             |   param ',' paramsList
             |   param
             ;
+            
 param              :    typeSpecifier ID '[' ']'
             |   typeSpecifier ID
             ;
+            
 compoundStatement  :    MYBEGIN localDeclarations statementList END
             ;
+            
 localDeclarations  :    /* Empty */
             |   varDeclaration localDeclarations
             ;
+            
 statementList      :    /* Empty */
-            |   statement
+            |   statement statementList
             ;
+            
 statement          :    expressionStatement
             |   compoundStatement
             |   selectionStatement
@@ -75,31 +89,42 @@ statement          :    expressionStatement
             |   readStatement
             |   writeStatment
             ;
+            
 expressionStatement :   expression ';'
             |   ';'
             ;
+            
 selectionStatement  :   IF expression THEN statement
             |   IF expression THEN statement ELSE statement
             ;
+            
 iterationStatement  :   WHILE expression DO statement
             ;
-assignmentStatement :   var '=' expression ';'
+            
+assignmentStatement :   var '=' simpleExpression ';'
             ;
+            
 returnStatement     : MYRETURN expression ';'
             |   MYRETURN ';'
             ;
-readStatement       :   READ ID ';' /*CHANGE*/
+            
+readStatement       :   READ var ';'
             ;
+            
 writeStatment       :   WRITE expression ';'
             ;
+            
 expression          :   simpleExpression
             ;
+            
 var                 :   ID '[' expression ']'
-            |   ID '['']'
+            |   ID
             ;
-simpleExpression    :   additiveExpression relop additiveExpression
+            
+simpleExpression    :   simpleExpression relop additiveExpression
             |   additiveExpression
             ;
+            
 relop               :   LE
             |   LT
             |   GT
@@ -107,24 +132,27 @@ relop               :   LE
             |   EQ
             |   NE
             ;
-additiveExpression  :   term zomAOT
+            
+            
+additiveExpression  :   term
+            |  additiveExpression addop term
             ;
-zomAOT              :   /* Empty */
-            |   addop term zomAOT
-            ;
+                    
 addop               :   '+'
             |   '-'
             ;
-term            :   factor zomMF
+            
+term                :   factor
+            |   term multop factor
             ;
-zomMF           :   /* Empty */
-            |   multop factor zomMF
-            ;
+
+            
 multop          :   '*'
             |   '/'
             |   AND
             |   OR
             ;
+            
 factor          :   '(' expression ')'
             |   NUM
             |   var
@@ -133,15 +161,17 @@ factor          :   '(' expression ')'
             |   FALSE
             |   NOT factor
             ;
+            
 call            :   ID '(' args ')'
             ;
+            
 args            :   /* Empty */
             |   argsList
             ;
-argsList        :   expression ',' expression
+            
+argsList        :   expression ',' argsList
             |   expression
             ;
-
 
 %%
 

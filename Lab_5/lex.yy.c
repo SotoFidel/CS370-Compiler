@@ -518,7 +518,7 @@ char yytext[YYLMAX];
 char *yytext_ptr;
 #line 1 "Lab5.l"
 #line 2 "Lab5.l"
-    //#include "y.tab.h"
+    #include "y.tab.h"
     
     int lineCount = 1;
     int myDebug = 1;
@@ -812,157 +812,159 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 9 "Lab5.l"
-{ fprintf(stderr, "detected\n"); return(INT); } //
+{ return(INT); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 10 "Lab5.l"
-{ return (AND); } // 
+{ return (AND); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 11 "Lab5.l"
-{ return (OR); } //
+{ return (OR); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 12 "Lab5.l"
-{ return (VOID); } //
+{ return (VOID); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 13 "Lab5.l"
-{ return (BOOL); } //
+{ return (BOOL); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 14 "Lab5.l"
-{ return (TRUE); } //
+{ return (TRUE); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 15 "Lab5.l"
-{ return (FALSE); }//
+{ return (FALSE); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 16 "Lab5.l"
-{ return (NOT); }//
+{ return (NOT); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 17 "Lab5.l"
-{ return (IF); } //
+{ return (IF); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 18 "Lab5.l"
-{ return (THEN); } //
+{ return (THEN); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 19 "Lab5.l"
-{ return (ELSE); } //
+{ return (ELSE); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 20 "Lab5.l"
-{ return (READ); } //
+{ return (READ); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 21 "Lab5.l"
-{ return (WRITE); } //
+{ return (WRITE); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 22 "Lab5.l"
-{ return (MYRETURN); } //
+{ return (MYRETURN); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 23 "Lab5.l"
-{ return (WHILE); } //
+{ return (WHILE); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 24 "Lab5.l"
-{ return (DO); } //
+{ return (DO); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 25 "Lab5.l"
-{ return (LT); }//
+{ return (LT); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 26 "Lab5.l"
-{ return (GT); }//
+{ return (GT); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 27 "Lab5.l"
-{ return (LE); }//
+{ return (LE); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 28 "Lab5.l"
-{ return (GE); }//
+{ return (GE); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 29 "Lab5.l"
-{ return (EQ); }//
+{ return (EQ); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 30 "Lab5.l"
-{ return (NE); }//
+{ return (NE); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 31 "Lab5.l"
-{ return (MYBEGIN); } //
+{ return (MYBEGIN); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 32 "Lab5.l"
-{ return (END); } //
+{ return (END); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 33 "Lab5.l"
-{ yylval = strdup(yytext);
-                          return (ID); } //
+{ yylval.typeString = strdup(yytext);
+                          return (ID); 
+                        }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 35 "Lab5.l"
-{ yylval = atoi( (const char *)yytext);
-                          return (NUM); } //
+#line 36 "Lab5.l"
+{ yylval.typeInt = atoi( (const char *)yytext);
+                          return (NUM); 
+                        }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 37 "Lab5.l"
+#line 39 "Lab5.l"
 { return (*yytext);  }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 38 "Lab5.l"
+#line 40 "Lab5.l"
 {}
 	YY_BREAK
 case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
-#line 39 "Lab5.l"
+#line 41 "Lab5.l"
 { lineCount++; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 40 "Lab5.l"
+#line 42 "Lab5.l"
 ECHO;
 	YY_BREAK
-#line 965 "lex.yy.c"
+#line 967 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1979,17 +1981,11 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 40 "Lab5.l"
+#line 42 "Lab5.l"
 
 
 int yywrap()
 {
-	fprintf(stderr, "hello\n");
-}
-
-int main()
-{
- yylex();
-
+	fprintf(stderr, "Done\n");
 }
 

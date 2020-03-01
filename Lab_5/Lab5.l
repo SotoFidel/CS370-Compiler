@@ -6,7 +6,7 @@
 %}
 
 %%
-int                     { fprintf(stderr, "detected\n"); return(INT); }
+int                     { return(INT); }
 and                     { return (AND); }
 or                      { return (OR); }
 void                    { return (VOID); }
@@ -31,10 +31,12 @@ do                      { return (DO); }
 "begin"                 { return (MYBEGIN); }
 "end"                   { return (END); }
 [a-zA-Z][a-zA-Z0-9]*    { yylval.typeString = strdup(yytext);
-                          return (ID); }
+                          return (ID); 
+                        }
 [0-9][0-9]*             { yylval.typeInt = atoi( (const char *)yytext);
-                          return (NUM); }
-[+\-=%*/\[\](),;]       { return (*yytext);  }
+                          return (NUM); 
+                        }
+[+\-=%*/\[\]\(\),;]       { return (*yytext);  }
 [ \t]                   {}
 \n                      { lineCount++; }
 %%
