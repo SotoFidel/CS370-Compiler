@@ -1,5 +1,5 @@
 %{
-    //#include "y.tab.h"
+    #include "y.tab.h"
     
     int lineCount = 1;
     int myDebug = 1;
@@ -30,9 +30,9 @@ do                      { return (DO); }
 "!="                    { return (NE); }
 "begin"                 { return (MYBEGIN); }
 "end"                   { return (END); }
-[a-zA-Z][a-zA-Z0-9]*    { yylval = strdup(yytext);
+[a-zA-Z][a-zA-Z0-9]*    { yylval.typeString = strdup(yytext);
                           return (ID); }
-[0-9][0-9]*             { yylval = atoi( (const char *)yytext);
+[0-9][0-9]*             { yylval.typeInt = atoi( (const char *)yytext);
                           return (NUM); }
 [+\-=%*/\[\](),;]       { return (*yytext);  }
 [ \t]                   {}

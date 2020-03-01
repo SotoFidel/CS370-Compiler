@@ -45,5 +45,4 @@ int yywrap()
 int main()
 {
  yylex();
-
 }
