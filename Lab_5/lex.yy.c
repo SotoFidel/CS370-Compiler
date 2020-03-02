@@ -1,5 +1,5 @@
 
-#line 2 "lex.yy.c"
+#line 3 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -162,27 +162,8 @@ extern FILE *yyin, *yyout;
 #define EOB_ACT_END_OF_FILE 1
 #define EOB_ACT_LAST_MATCH 2
     
-    /* Note: We specifically omit the test for yy_rule_can_match_eol because it requires
-     *       access to the local variable yy_act. Since yyless() is a macro, it would break
-     *       existing scanners that call yyless() from OUTSIDE yylex.
-     *       One obvious solution it to make yy_act a global. I tried that, and saw
-     *       a 5% performance hit in a non-yylineno scanner, because yy_act is
-     *       normally declared as a register variable-- so it is not worth it.
-     */
-    #define  YY_LESS_LINENO(n) \
-            do { \
-                int yyl;\
-                for ( yyl = n; yyl < yyleng; ++yyl )\
-                    if ( yytext[yyl] == '\n' )\
-                        --yylineno;\
-            }while(0)
-    #define YY_LINENO_REWIND_TO(dst) \
-            do {\
-                const char *p;\
-                for ( p = yy_cp-1; p >= (dst); --p)\
-                    if ( *p == '\n' )\
-                        --yylineno;\
-            }while(0)
+    #define YY_LESS_LINENO(n)
+    #define YY_LINENO_REWIND_TO(ptr)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -347,11 +328,14 @@ FILE *yyin = NULL, *yyout = NULL;
 
 typedef int yy_state_type;
 
-#define YY_FLEX_LEX_COMPAT
 extern int yylineno;
 int yylineno = 1;
 
-extern char yytext[];
+extern char *yytext;
+#ifdef yytext_ptr
+#undef yytext_ptr
+#endif
+#define yytext_ptr yytext
 
 static yy_state_type yy_get_previous_state ( void );
 static yy_state_type yy_try_NUL_trans ( yy_state_type current_state  );
@@ -366,9 +350,6 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	yyleng = (int) (yy_cp - yy_bp); \
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
-	if ( yyleng >= YYLMAX ) \
-		YY_FATAL_ERROR( "token too large, exceeds YYLMAX" ); \
-	yy_flex_strncpy( yytext, (yytext_ptr), yyleng + 1 ); \
 	(yy_c_buf_p) = yy_cp;
 #define YY_NUM_RULES 30
 #define YY_END_OF_BUFFER 31
@@ -491,12 +472,6 @@ static const flex_int16_t yy_chk[116] =
        84,   84,   84,   84,   84
     } ;
 
-/* Table of booleans, true if rule could match eol. */
-static const flex_int32_t yy_rule_can_match_eol[31] =
-    {   0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,     };
-
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
 
@@ -510,20 +485,26 @@ int yy_flex_debug = 0;
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
-#ifndef YYLMAX
-#define YYLMAX 8192
-#endif
-
-char yytext[YYLMAX];
-char *yytext_ptr;
+char *yytext;
 #line 1 "Lab5.l"
 #line 2 "Lab5.l"
+    /* LAB 5: C-ALGOL LEX ROUTINE*/
+    /*
+        Written by: Fidel Soto
+    */
+    /*
+        Date: March 1, 2020
+
+        INITIAL IMPLEMENTATION:
+            *Implemented lex rules that adhere to the C-Algol specification.
+                For now, the lex routine returns tokens and will print out
+                constants that it comes accross.
+    */
     #include "y.tab.h"
     #include <stdio.h>
     int lineCount = 1;
-    int myDebug = 1;
-#line 525 "lex.yy.c"
-#line 526 "lex.yy.c"
+#line 507 "lex.yy.c"
+#line 508 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -740,9 +721,9 @@ YY_DECL
 		}
 
 	{
-#line 8 "Lab5.l"
+#line 19 "Lab5.l"
 
-#line 745 "lex.yy.c"
+#line 727 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -788,16 +769,6 @@ yy_find_action:
 
 		YY_DO_BEFORE_ACTION;
 
-		if ( yy_act != YY_END_OF_BUFFER && yy_rule_can_match_eol[yy_act] )
-			{
-			int yyl;
-			for ( yyl = 0; yyl < yyleng; ++yyl )
-				if ( yytext[yyl] == '\n' )
-					
-    yylineno++;
-;
-			}
-
 do_action:	/* This label is used only to access EOF actions. */
 
 		switch ( yy_act )
@@ -811,134 +782,134 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 9 "Lab5.l"
-{ return(INT); }
+#line 20 "Lab5.l"
+{ return (INT); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 10 "Lab5.l"
+#line 21 "Lab5.l"
 { return (AND); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 11 "Lab5.l"
+#line 22 "Lab5.l"
 { return (OR); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 12 "Lab5.l"
+#line 23 "Lab5.l"
 { return (VOID); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 13 "Lab5.l"
+#line 24 "Lab5.l"
 { return (BOOL); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 14 "Lab5.l"
+#line 25 "Lab5.l"
 { return (TRUE); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 15 "Lab5.l"
+#line 26 "Lab5.l"
 { return (FALSE); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 16 "Lab5.l"
+#line 27 "Lab5.l"
 { return (NOT); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 17 "Lab5.l"
+#line 28 "Lab5.l"
 { return (IF); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 18 "Lab5.l"
+#line 29 "Lab5.l"
 { return (THEN); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 19 "Lab5.l"
+#line 30 "Lab5.l"
 { return (ELSE); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 20 "Lab5.l"
+#line 31 "Lab5.l"
 { return (READ); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 21 "Lab5.l"
+#line 32 "Lab5.l"
 { return (WRITE); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 22 "Lab5.l"
+#line 33 "Lab5.l"
 { return (MYRETURN); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 23 "Lab5.l"
+#line 34 "Lab5.l"
 { return (WHILE); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 24 "Lab5.l"
+#line 35 "Lab5.l"
 { return (DO); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 25 "Lab5.l"
+#line 36 "Lab5.l"
 { return (LT); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 26 "Lab5.l"
+#line 37 "Lab5.l"
 { return (GT); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 27 "Lab5.l"
+#line 38 "Lab5.l"
 { return (LE); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 28 "Lab5.l"
+#line 39 "Lab5.l"
 { return (GE); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 29 "Lab5.l"
+#line 40 "Lab5.l"
 { return (EQ); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 30 "Lab5.l"
+#line 41 "Lab5.l"
 { return (NE); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 31 "Lab5.l"
+#line 42 "Lab5.l"
 { return (MYBEGIN); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 32 "Lab5.l"
+#line 43 "Lab5.l"
 { return (END); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 33 "Lab5.l"
+#line 44 "Lab5.l"
 { yylval.typeString = strdup(yytext);
                           return (ID); 
                         }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 36 "Lab5.l"
+#line 47 "Lab5.l"
 { yylval.typeInt = atoi( (const char *)yytext);
                           fprintf(stderr, "Constant found with value %d\n", yylval.typeInt);
                           return (NUM); 
@@ -946,26 +917,26 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 40 "Lab5.l"
+#line 51 "Lab5.l"
 { return (*yytext);  }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 41 "Lab5.l"
+#line 52 "Lab5.l"
 {}
 	YY_BREAK
 case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
-#line 42 "Lab5.l"
+#line 53 "Lab5.l"
 { lineCount++; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 43 "Lab5.l"
+#line 54 "Lab5.l"
 ECHO;
 	YY_BREAK
-#line 968 "lex.yy.c"
+#line 940 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1333,10 +1304,6 @@ static int yy_get_next_buffer (void)
 
 	*--yy_cp = (char) c;
 
-    if ( c == '\n' ){
-        --yylineno;
-    }
-
 	(yytext_ptr) = yy_bp;
 	(yy_hold_char) = *yy_cp;
 	(yy_c_buf_p) = yy_cp;
@@ -1413,11 +1380,6 @@ static int yy_get_next_buffer (void)
 	c = *(unsigned char *) (yy_c_buf_p);	/* cast for 8-bit char's */
 	*(yy_c_buf_p) = '\0';	/* preserve yytext */
 	(yy_hold_char) = *++(yy_c_buf_p);
-
-	if ( c == '\n' )
-		
-    yylineno++;
-;
 
 	return c;
 }
@@ -1885,9 +1847,6 @@ static int yy_init_globals (void)
      * This function is called from yylex_destroy(), so don't allocate here.
      */
 
-    /* We do not touch yylineno unless the option is enabled. */
-    yylineno =  1;
-    
     (yy_buffer_stack) = NULL;
     (yy_buffer_stack_top) = 0;
     (yy_buffer_stack_max) = 0;
@@ -1982,7 +1941,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 43 "Lab5.l"
+#line 54 "Lab5.l"
 
 
 int yywrap()

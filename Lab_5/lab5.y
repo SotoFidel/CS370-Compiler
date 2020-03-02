@@ -1,4 +1,21 @@
 %{
+
+    /* LAB 5: C-ALGOL YACC ROUTINE*/
+    /*
+        Written by: Fidel Soto
+    */
+    /*
+        Date: March 1, 2020
+
+        INITIAL IMPLEMENTATION:
+            *Implemented the rules based on the 'Extended BNF Grammar for C-Algol'
+                documentation for our language. In addition to the initial implementation,
+                the yacc routine will also throw syntax errors with the corresponding line
+                number. The line number variable is declared in Lab5.l.
+            *Tokens will be brought in from the lex routine, with some of them having 
+             a type (namely 'NUM' and 'ID') coming from a %union{}
+    */
+
     int yylex();
     
     #include <stdio.h>

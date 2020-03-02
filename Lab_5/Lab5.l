@@ -1,12 +1,23 @@
 %{
+    /* LAB 5: C-ALGOL LEX ROUTINE*/
+    /*
+        Written by: Fidel Soto
+    */
+    /*
+        Date: March 1, 2020
+
+        INITIAL IMPLEMENTATION:
+            *Implemented lex rules that adhere to the C-Algol specification.
+                For now, the lex routine returns tokens and will print out
+                constants that it comes accross.
+    */
     #include "y.tab.h"
     #include <stdio.h>
     int lineCount = 1;
-    int myDebug = 1;
 %}
 
 %%
-int                     { return(INT); }
+int                     { return (INT); }
 and                     { return (AND); }
 or                      { return (OR); }
 void                    { return (VOID); }
