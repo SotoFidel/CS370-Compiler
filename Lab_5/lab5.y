@@ -137,8 +137,8 @@ var                 :   ID '[' expression ']'
             |   ID
             ;
             
-simpleExpression    :   simpleExpression relop additiveExpression
-            |   additiveExpression
+simpleExpression    :   additiveExpression
+            |   simpleExpression relop additiveExpression
             ;
             
 relop               :   LE
