@@ -514,13 +514,13 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    48,    48,    51,    52,    55,    56,    59,    62,    63,
-      64,    65,    68,    69,    70,    73,    76,    77,    80,    81,
-      84,    85,    88,    91,    92,    95,    96,    99,   100,   101,
-     102,   103,   104,   105,   106,   109,   110,   113,   114,   117,
-     120,   123,   124,   127,   130,   133,   136,   137,   140,   141,
-     144,   145,   146,   147,   148,   149,   153,   154,   157,   158,
-     161,   162,   166,   167,   168,   169,   172,   173,   174,   175,
-     176,   177,   178,   181,   184,   185,   188,   189
+      66,    67,    72,    73,    74,    77,    80,    81,    84,    85,
+      88,    89,    92,    95,    96,    99,   100,   103,   104,   105,
+     106,   107,   108,   109,   110,   113,   114,   117,   118,   121,
+     124,   127,   128,   131,   134,   137,   140,   141,   144,   145,
+     148,   149,   150,   151,   152,   153,   157,   158,   161,   162,
+     165,   166,   170,   171,   172,   173,   176,   177,   180,   181,
+     182,   183,   184,   187,   190,   191,   194,   195
 };
 #endif
 
@@ -1378,8 +1378,32 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-      
-#line 1383 "y.tab.c" /* yacc.c:1646  */
+        case 9:
+#line 63 "lab5.y" /* yacc.c:1646  */
+    {
+                                    fprintf(stderr, "Constant found value %d\n", (yyvsp[-1]. typeInt ));
+                                }
+#line 1387 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 11:
+#line 67 "lab5.y" /* yacc.c:1646  */
+    {
+                                                fprintf(stderr, "Constant found value %d\n", (yyvsp[-3]. typeInt ));
+                                            }
+#line 1395 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 67:
+#line 177 "lab5.y" /* yacc.c:1646  */
+    {
+                        fprintf(stderr, "Constant found value %d\n", (yyvsp[0]. typeInt ));
+                    }
+#line 1403 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+
+#line 1407 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1607,7 +1631,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 192 "lab5.y" /* yacc.c:1906  */
+#line 198 "lab5.y" /* yacc.c:1906  */
 
 
 int main() 

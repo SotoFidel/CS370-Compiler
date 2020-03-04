@@ -60,9 +60,13 @@ varDeclaration     :   typeSpecifier varList ';'
             ;
             
 varList            :    ID
-            |   ID '[' NUM ']'
+            |   ID '[' NUM ']'  {
+                                    fprintf(stderr, "Constant found value %d\n", $3);
+                                }
             |   ID ',' varList
-            |   ID '[' NUM ']' ',' varList
+            |   ID '[' NUM ']' ',' varList  {
+                                                fprintf(stderr, "Constant found value %d\n", $3);
+                                            }
             ;
             
 typeSpecifier      :   INT
@@ -170,7 +174,9 @@ multop          :   '*'
             ;
             
 factor          :   '(' expression ')'
-            |   NUM
+            |   NUM {
+                        fprintf(stderr, "Constant found value %d\n", $1);
+                    }
             |   var
             |   call
             |   TRUE

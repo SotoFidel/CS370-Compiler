@@ -911,32 +911,31 @@ case 26:
 YY_RULE_SETUP
 #line 47 "Lab5.l"
 { yylval.typeInt = atoi( (const char *)yytext);
-                          fprintf(stderr, "Constant found with value %d\n", yylval.typeInt);
                           return (NUM); 
                         }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 51 "Lab5.l"
+#line 50 "Lab5.l"
 { return (*yytext);  }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 52 "Lab5.l"
+#line 51 "Lab5.l"
 {}
 	YY_BREAK
 case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
-#line 53 "Lab5.l"
+#line 52 "Lab5.l"
 { lineCount++; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 54 "Lab5.l"
+#line 53 "Lab5.l"
 ECHO;
 	YY_BREAK
-#line 940 "lex.yy.c"
+#line 939 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1941,7 +1940,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 54 "Lab5.l"
+#line 53 "Lab5.l"
 
 
 int yywrap()

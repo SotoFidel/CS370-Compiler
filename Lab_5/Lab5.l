@@ -45,7 +45,6 @@ do                      { return (DO); }
                           return (ID); 
                         }
 [0-9][0-9]*             { yylval.typeInt = atoi( (const char *)yytext);
-                          fprintf(stderr, "Constant found with value %d\n", yylval.typeInt);
                           return (NUM); 
                         }
 [+\-=%*/\[\]\(\),;]     { return (*yytext);  }
