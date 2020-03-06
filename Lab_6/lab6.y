@@ -18,10 +18,12 @@
 
     int yylex();
     
+    #include "ast.h"
     #include <stdio.h>
     #include <ctype.h>
     
     extern int lineCount;
+    ASTNode *GlobalPointer;
     
     void yyerror (s)  /* Called by yyparse on error */
      char *s;
@@ -36,6 +38,7 @@
 %union {
     int typeInt;
     char *typeString;
+    struct ASTNodeType * node;
 }
 
 %token INT AND OR VOID BOOL TRUE FALSE NOT IF THEN ELSE READ WRITE MYRETURN WHILE DO LT
@@ -43,29 +46,41 @@
 %token < typeInt > NUM
 %token < typeString > ID
 
+%type <node> varList varDeclaration declaration declarationList
+
 %%
 
-program            :   declarationList
+program            :   declarationList  { GlobalPointer = $1; }
             ;
             
-declarationList    :  declaration
-            |   declaration declarationList
+declarationList    :  declaration   { $$ = $1; }
+            |   declaration declarationList     { 
+                                                    $1 -> next = $2;
+                                                    $$ = $1;
+                                                }
             ;
             
-declaration        :   varDeclaration
-            |   funDeclaration
+declaration        :   varDeclaration   { $$ = $1; }
+            |   funDeclaration  { $$ = NULL; }
             ;
             
-varDeclaration     :   typeSpecifier varList ';'
+varDeclaration     :   typeSpecifier varList ';'    { $$ = $2; }
             ;
             
-varList            :    ID
+varList            :    ID      {
+                                    $$ = ASTCreateNode(varDeclaration);
+                                    $$->name = $1;
+                                }
             |   ID '[' NUM ']'  {
                                     fprintf(stderr, "Constant found value %d\n", $3);
+                                    $$ = NULL;
                                 }
-            |   ID ',' varList
+            |   ID ',' varList  {
+                                    $$ = NULL;
+                                }
             |   ID '[' NUM ']' ',' varList  {
                                                 fprintf(stderr, "Constant found value %d\n", $3);
+                                                $$ = NULL;
                                             }
             ;
             
@@ -200,4 +215,6 @@ argsList        :   expression ',' argsList
 int main() 
 {
     yyparse();
+    ASTprint(GlobalPointer, 0);
+    // Print Out
 }

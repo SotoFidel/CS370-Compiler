@@ -109,12 +109,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 36 "lab5.y"
+#line 38 "lab6.y"
 
     int typeInt;
     char *typeString;
+    struct ASTNodeType * node;
 
-#line 118 "y.tab.h"
+#line 119 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

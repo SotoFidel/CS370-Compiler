@@ -66,7 +66,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "lab5.y"
+#line 1 "lab6.y"
 
 
     /* LAB 5: C-ALGOL YACC ROUTINE*/
@@ -87,10 +87,12 @@
 
     int yylex();
     
+    #include "ast.h"
     #include <stdio.h>
     #include <ctype.h>
     
     extern int lineCount;
+    ASTNode *GlobalPointer;
     
     void yyerror (s)  /* Called by yyparse on error */
      char *s;
@@ -99,7 +101,7 @@
     }
 
 
-#line 103 "y.tab.c"
+#line 105 "y.tab.c"
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
@@ -198,12 +200,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 36 "lab5.y"
+#line 38 "lab6.y"
 
     int typeInt;
     char *typeString;
+    struct ASTNodeType * node;
 
-#line 207 "y.tab.c"
+#line 210 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -511,14 +514,14 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    48,    48,    51,    52,    55,    56,    59,    62,    63,
-      66,    67,    72,    73,    74,    77,    80,    81,    84,    85,
-      88,    89,    92,    95,    96,    99,   100,   103,   104,   105,
-     106,   107,   108,   109,   110,   113,   114,   117,   118,   121,
-     124,   127,   128,   131,   134,   137,   140,   141,   144,   145,
-     148,   149,   150,   151,   152,   153,   157,   158,   161,   162,
-     165,   166,   170,   171,   172,   173,   176,   177,   180,   181,
-     182,   183,   184,   187,   190,   191,   194,   195
+       0,    53,    53,    56,    57,    63,    64,    67,    70,    74,
+      78,    81,    87,    88,    89,    92,    95,    96,    99,   100,
+     103,   104,   107,   110,   111,   114,   115,   118,   119,   120,
+     121,   122,   123,   124,   125,   128,   129,   132,   133,   136,
+     139,   142,   143,   146,   149,   152,   155,   156,   159,   160,
+     163,   164,   165,   166,   167,   168,   172,   173,   176,   177,
+     180,   181,   185,   186,   187,   188,   191,   192,   195,   196,
+     197,   198,   199,   202,   205,   206,   209,   210
 };
 #endif
 
@@ -1386,32 +1389,90 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 9:
-#line 63 "lab5.y"
-    {
-                                    fprintf(stderr, "Constant found value %d\n", (yyvsp[-1]. typeInt ));
-                                }
-#line 1395 "y.tab.c"
+  case 2:
+#line 53 "lab6.y"
+    { GlobalPointer = (yyvsp[0].node); }
+#line 1396 "y.tab.c"
     break;
 
-  case 11:
-#line 67 "lab5.y"
-    {
-                                                fprintf(stderr, "Constant found value %d\n", (yyvsp[-3]. typeInt ));
-                                            }
-#line 1403 "y.tab.c"
+  case 3:
+#line 56 "lab6.y"
+    { (yyval.node) = (yyvsp[0].node); }
+#line 1402 "y.tab.c"
     break;
 
-  case 67:
-#line 177 "lab5.y"
-    {
-                        fprintf(stderr, "Constant found value %d\n", (yyvsp[0]. typeInt ));
-                    }
+  case 4:
+#line 57 "lab6.y"
+    { 
+                                                    (yyvsp[-1].node) -> next = (yyvsp[0].node);
+                                                    (yyval.node) = (yyvsp[-1].node);
+                                                }
 #line 1411 "y.tab.c"
     break;
 
+  case 5:
+#line 63 "lab6.y"
+    { (yyval.node) = (yyvsp[0].node); }
+#line 1417 "y.tab.c"
+    break;
 
-#line 1415 "y.tab.c"
+  case 6:
+#line 64 "lab6.y"
+    { (yyval.node) = NULL; }
+#line 1423 "y.tab.c"
+    break;
+
+  case 7:
+#line 67 "lab6.y"
+    { (yyval.node) = (yyvsp[-1].node); }
+#line 1429 "y.tab.c"
+    break;
+
+  case 8:
+#line 70 "lab6.y"
+    {
+                                    (yyval.node) = ASTCreateNode(varDeclaration);
+                                    (yyval.node)->name = (yyvsp[0]. typeString );
+                                }
+#line 1438 "y.tab.c"
+    break;
+
+  case 9:
+#line 74 "lab6.y"
+    {
+                                    fprintf(stderr, "Constant found value %d\n", (yyvsp[-1]. typeInt ));
+                                    (yyval.node) = NULL;
+                                }
+#line 1447 "y.tab.c"
+    break;
+
+  case 10:
+#line 78 "lab6.y"
+    {
+                                    (yyval.node) = NULL;
+                                }
+#line 1455 "y.tab.c"
+    break;
+
+  case 11:
+#line 81 "lab6.y"
+    {
+                                                fprintf(stderr, "Constant found value %d\n", (yyvsp[-3]. typeInt ));
+                                                (yyval.node) = NULL;
+                                            }
+#line 1464 "y.tab.c"
+    break;
+
+  case 67:
+#line 192 "lab6.y"
+    {
+                        fprintf(stderr, "Constant found value %d\n", (yyvsp[0]. typeInt ));
+                    }
+#line 1472 "y.tab.c"
+    break;
+
+
+#line 1476 "y.tab.c"
 
       default: break;
     }
@@ -1643,10 +1704,12 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 198 "lab5.y"
+#line 213 "lab6.y"
 
 
 int main() 
 {
     yyparse();
+    ASTprint(GlobalPointer, 0);
+    // Print Out
 }

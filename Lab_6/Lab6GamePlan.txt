@@ -1,0 +1,11 @@
+Lab6 Game Plan
+
+1)   Create a Lab6 work area -- copy over lab 5 and make name changes
+2)   Create a small Abstract Syntax Tree structure
+     	    ast.h
+	    ast.c
+3)   Add ast.h to YACC file
+4)   Update the YACC union to include the AST structure
+5)   Update your makefile to compile everything
+6)   Add syntax directed semantic actino for VARDEC
+7)   Make AST_print(Node *T) routine to print
