@@ -15,8 +15,11 @@ typedef struct ASTNodeType
 {
     enum NODETYPE Type;
     char *name;
+    int size;
     struct ASTNodeType *s1, *s2, *next;
 } ASTNode;
+
+void printTabs(int level);
 
 void ASTprint(ASTNode *p, int level);
 

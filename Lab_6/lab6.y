@@ -70,17 +70,24 @@ varDeclaration     :   typeSpecifier varList ';'    { $$ = $2; }
 varList            :    ID      {
                                     $$ = ASTCreateNode(varDeclaration);
                                     $$->name = $1;
+                                    $$->size = 1;
                                 }
             |   ID '[' NUM ']'  {
-                                    fprintf(stderr, "Constant found value %d\n", $3);
-                                    $$ = NULL;
+                                    $$ = ASTCreateNode(varDeclaration);
+                                    $$->name = $1;
+                                    $$->size = $3;
                                 }
             |   ID ',' varList  {
-                                    $$ = NULL;
+                                    $$ = ASTCreateNode(varDeclaration);
+                                    $$->name = $1;
+                                    $$->size = 1;
+                                    $$-> s1 = $3;
                                 }
             |   ID '[' NUM ']' ',' varList  {
-                                                fprintf(stderr, "Constant found value %d\n", $3);
-                                                $$ = NULL;
+                                                $$ = ASTCreateNode(varDeclaration);
+                                                $$->name = $1;
+                                                $$->size = $3;
+                                                $$-> s1 = $6;
                                             }
             ;
             

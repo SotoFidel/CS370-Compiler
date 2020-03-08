@@ -14,6 +14,12 @@ ASTNode *ASTCreateNode(enum NODETYPE type)
     }
 }
 
+void printTabs(int level) {
+    for (int i = 0; i  < level; i++)
+    {
+        printf("\t");
+    }
+}
 
 void ASTprint(ASTNode *p, int level)
 {
@@ -21,13 +27,16 @@ void ASTprint(ASTNode *p, int level)
     
     switch (p->Type) 
     {
-        case varDeclaration:    
-            printf("varDeclaration found\n");
-            printf("name is %s\n\n", p->name);
+        case varDeclaration:   
+            printTabs(level);
+            printf("varDeclaration found.");
+            printf("Name is %s \t size is %d\n", p->name, p->size);
         break;
         
         default:
             printf("UNKNOWN type in ASTprint\n");
     }
-    ASTprint (p -> next, level++);
+    ASTprint(p->s1, level + 1);
+    ASTprint(p->s2, level + 1);
+    ASTprint (p -> next, level);
 }
