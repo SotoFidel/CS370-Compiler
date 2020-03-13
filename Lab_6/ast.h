@@ -11,10 +11,18 @@ enum NODETYPE
     //and so forth
 }; // end of enum NODETYPE
 
+enum DATATYPE
+{
+    intType,
+    boolType,
+    voidType
+};
+
 typedef struct ASTNodeType
 {
     enum NODETYPE Type;
     char *name;
+    enum DATATYPE dataType;
     int size;
     struct ASTNodeType *s1, *s2, *next;
 } ASTNode;

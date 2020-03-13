@@ -29,14 +29,35 @@ void ASTprint(ASTNode *p, int level)
     {
         case varDeclaration:   
             printTabs(level);
-            printf("varDeclaration found.");
-            printf("Name is %s \t size is %d\n", p->name, p->size);
+            printf("varDeclaration found.\n");
+            printTabs(level);
+            char *type;
+            switch (p->dataType) 
+            {
+                case intType:
+                    type = "int";
+                break;
+                case boolType:
+                    type = "bool";
+                break;
+                case voidType:
+                    type = "void";
+                break;
+                default:
+                    type = "undetermined?";
+                break;
+            }
+            printf("Type: %s\n", type);
+            printTabs(level);
+            printf("Name: %s\n", p->name);
+            printTabs(level);
+            printf("Size: %d\n\n", p->size);
+            ASTprint(p->s1, level + 1);
+            ASTprint(p->s2, level + 1);
         break;
         
         default:
             printf("UNKNOWN type in ASTprint\n");
     }
-    ASTprint(p->s1, level + 1);
-    ASTprint(p->s2, level + 1);
     ASTprint (p -> next, level);
 }

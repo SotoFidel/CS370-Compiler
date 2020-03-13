@@ -11,6 +11,7 @@
                 For now, the lex routine returns tokens and will print out
                 constants that it comes accross.
     */
+    #include "ast.h"
     #include "y.tab.h"
     #include <stdio.h>
     int lineCount = 1;

@@ -39,6 +39,7 @@
     int typeInt;
     char *typeString;
     struct ASTNodeType * node;
+    enum DATATYPE type;
 }
 
 %token INT AND OR VOID BOOL TRUE FALSE NOT IF THEN ELSE READ WRITE MYRETURN WHILE DO LT
@@ -47,7 +48,7 @@
 %token < typeString > ID
 
 %type <node> varList varDeclaration declaration declarationList
-
+%type < type > typeSpecifier
 %%
 
 program            :   declarationList  { GlobalPointer = $1; }
@@ -64,7 +65,16 @@ declaration        :   varDeclaration   { $$ = $1; }
             |   funDeclaration  { $$ = NULL; }
             ;
             
-varDeclaration     :   typeSpecifier varList ';'    { $$ = $2; }
+varDeclaration     :   typeSpecifier varList ';'    { 
+                                                        $$ = $2;
+                                                        struct ASTNodeType *p;
+                                                        p = $$;
+                                                        while (p != NULL) 
+                                                        {
+                                                            p->dataType = $1;
+                                                            p = p->s1;
+                                                        }
+                                                    }
             ;
             
 varList            :    ID      {
@@ -91,9 +101,15 @@ varList            :    ID      {
                                             }
             ;
             
-typeSpecifier      :   INT
-            |   VOID
-            |   BOOL
+typeSpecifier      :   INT  {
+                                $$ = intType;
+                            }
+            |   VOID        {
+                                $$ = voidType;
+                            }
+            |   BOOL        {
+                                $$ = boolType;
+                            }
             ;
             
 funDeclaration     :   typeSpecifier ID '(' params ')' compoundStatement
