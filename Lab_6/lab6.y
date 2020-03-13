@@ -40,6 +40,7 @@
     char *typeString;
     struct ASTNodeType * node;
     enum DATATYPE type;
+    enum OPERATOR opType;
 }
 
 %token INT AND OR VOID BOOL TRUE FALSE NOT IF THEN ELSE READ WRITE MYRETURN WHILE DO LT
@@ -47,8 +48,11 @@
 %token < typeInt > NUM
 %token < typeString > ID
 
-%type <node> varList varDeclaration declaration declarationList
+%type <node> varList varDeclaration declaration declarationList funDeclaration params param paramsList
+%type <node> compoundStatement statement statementList localDeclarations writeStatment
+%type <node> expression simpleExpression additiveExpression term factor
 %type < type > typeSpecifier
+%type < opType > addop
 %%
 
 program            :   declarationList  { GlobalPointer = $1; }
@@ -62,7 +66,7 @@ declarationList    :  declaration   { $$ = $1; }
             ;
             
 declaration        :   varDeclaration   { $$ = $1; }
-            |   funDeclaration  { $$ = NULL; }
+            |   funDeclaration  { $$ = $1; }
             ;
             
 varDeclaration     :   typeSpecifier varList ';'    { 
@@ -112,40 +116,73 @@ typeSpecifier      :   INT  {
                             }
             ;
             
-funDeclaration     :   typeSpecifier ID '(' params ')' compoundStatement
+funDeclaration     :   typeSpecifier ID '(' params ')' compoundStatement    {
+                                                                                $$ = ASTCreateNode(funDeclaration);
+                                                                                $$->name = $2;
+                                                                                $$->dataType = $1;
+                                                                                $$->s1 = $4;
+                                                                                $$->s2 = $6;
+                                                                            }
             ;
             
-params             :   VOID
+params             :   VOID { $$ = NULL; }
             |   paramsList
             ;
             
-paramsList         : param
-            |   param ',' paramsList
+paramsList         : param  { $$ = $1; }
+            |   param ',' paramsList    {
+                                            $$->next = $3;
+                                            $$ = $1;
+                                        }
             ;
             
-param              :    typeSpecifier ID '[' ']'
-            |   typeSpecifier ID
+param              :    typeSpecifier ID '[' ']'    {
+                                                        $$ = ASTCreateNode(param);
+                                                        $$->dataType = $1;
+                                                        $$->name = $2;
+                                                        $$->size = -1;
+                                                    }
+            |   typeSpecifier ID    {
+                                        $$ = ASTCreateNode(param);
+                                        $$->dataType = $1;
+                                        $$->name = $2;
+                                        $$->size = 0;
+                                    }
             ;
             
-compoundStatement  :    MYBEGIN localDeclarations statementList END
+compoundStatement  :    MYBEGIN localDeclarations statementList END {
+                                                                        $$ = ASTCreateNode(body);
+                                                                        $$->s1 = $2;
+                                                                        $$->s2 = $3;
+                                                                    }
             ;
             
-localDeclarations  :    /* Empty */
-            |   varDeclaration localDeclarations
+localDeclarations  :    /* Empty */ { $$ = NULL; }
+            |   varDeclaration localDeclarations    { $1->next = $2; $$ = $1; }
             ;
             
-statementList      :    /* Empty */
-            |   statement statementList
+statementList      :    /* Empty */ { $$ = NULL; }
+            |   statement statementList {
+                                            if ($1 ==  NULL)
+                                            {
+                                                $$ = $2;
+                                            }
+                                            else 
+                                            {
+                                                $1->next = $2;
+                                                $$ = $1;
+                                            }
+                                        }
             ;
             
-statement          :    expressionStatement
-            |   compoundStatement
-            |   selectionStatement
-            |   iterationStatement
-            |   assignmentStatement
-            |   returnStatement
-            |   readStatement
-            |   writeStatment
+statement          :    expressionStatement { $$ = NULL; }
+            |   compoundStatement { $$ = $1; }
+            |   selectionStatement { $$ = NULL; }
+            |   iterationStatement { $$ = NULL; }
+            |   assignmentStatement { $$ = NULL; }
+            |   returnStatement { $$ = NULL; }
+            |   readStatement { $$ = NULL; }
+            |   writeStatment { $$ = $1; }
             ;
             
 expressionStatement :   expression ';'
@@ -169,18 +206,21 @@ returnStatement     : MYRETURN expression ';'
 readStatement       :   READ var ';'
             ;
             
-writeStatment       :   WRITE expression ';'
+writeStatment       :   WRITE expression ';'    {
+                                                    $$ = ASTCreateNode(myWrite);
+                                                    $$->s1 = $2;
+                                                }
             ;
             
-expression          :   simpleExpression
+expression          :   simpleExpression    { $$ = $1; }
             ;
             
 var                 :   ID '[' expression ']'
             |   ID
             ;
             
-simpleExpression    :   additiveExpression
-            |   simpleExpression relop additiveExpression
+simpleExpression    :   additiveExpression  { $$ = $1; }
+            |   simpleExpression relop additiveExpression   { $$ = NULL; }
             ;
             
 relop               :   LE
@@ -192,16 +232,20 @@ relop               :   LE
             ;
             
             
-additiveExpression  :   term
-            |  additiveExpression addop term
+additiveExpression  :   term    { $$ = $1; }
+            |  additiveExpression addop term { 
+                                                $$ = ASTCreateNode(expression);
+                                                $$->s1 = $1;
+                                                $$->s2 = $3;
+                                             }
             ;
                     
-addop               :   '+'
-            |   '-'
+addop               :   '+' { $$ = plus; }
+            |   '-' { $$ = minus; }
             ;
             
-term                :   factor
-            |   term multop factor
+term                :   factor  { $$ = $1; }
+            |   term multop factor  { $$ = NULL ; }
             ;
 
             
@@ -211,15 +255,16 @@ multop          :   '*'
             |   OR
             ;
             
-factor          :   '(' expression ')'
+factor          :   '(' expression ')'  { $$ = NULL; }
             |   NUM {
-                        fprintf(stderr, "Constant found value %d\n", $1);
+                        $$ = ASTCreateNode(myNum);
+                        $$->size = $1;
                     }
-            |   var
-            |   call
-            |   TRUE
-            |   FALSE
-            |   NOT factor
+            |   var { $$ = NULL; }
+            |   call    { $$ = NULL; }
+            |   TRUE    { $$ = NULL; }
+            |   FALSE   {  $$ = NULL; }
+            |   NOT factor  { $$ = NULL; }
             ;
             
 call            :   ID '(' args ')'

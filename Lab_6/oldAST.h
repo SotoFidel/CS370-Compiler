@@ -7,36 +7,17 @@
 enum NODETYPE
 {
     varDeclaration,
-    funDeclaration,
-    param,
-    body,
-    myWrite,
-    myNum,
-    expression
+    funDeclaration
     //and so forth
 }; // end of enum NODETYPE
-
-enum DATATYPE
-{
-    intType,
-    boolType,
-    voidType
-};
-
-enum OPERATOR
-{
-    plus, 
-    minus
-};
 
 typedef struct ASTNodeType
 {
     enum NODETYPE Type;
     char *name;
-    enum DATATYPE dataType;
+    char *dataType;
     int size;
     struct ASTNodeType *s1, *s2, *next;
-    enum OPERATOR operator;
 } ASTNode;
 
 void printTabs(int level);

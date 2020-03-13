@@ -4,14 +4,10 @@
 
 ASTNode *ASTCreateNode(enum NODETYPE type)
 {
-    switch (type) 
-    {
-        ASTNode *p;
-        case    varDeclaration:
-            p = ( ASTNode *)(malloc (sizeof( struct ASTNodeType ) ) );
-            return p;
-        break;
-    }
+    ASTNode *p;
+    p = ( ASTNode *)(malloc (sizeof( struct ASTNodeType ) ) );
+    p->Type = type;
+    return p;
 }
 
 void printTabs(int level) {
@@ -54,6 +50,24 @@ void ASTprint(ASTNode *p, int level)
             printf("Size: %d\n\n", p->size);
             ASTprint(p->s1, level + 1);
             ASTprint(p->s2, level + 1);
+        break;
+        
+        case funDeclaration:
+        printTabs(level);
+        printf("funDeclaration found.\n");
+        break;
+        
+        case body:
+        printTabs(level);
+        printf("body found.\n");
+        break;
+        
+        case expression:
+        printTabs(level);
+        printf("expression found.\n");
+        printf("Operator is ");
+        ASTprint(p->s1, level +1);
+        ASTprint(p->s2, level +1);
         break;
         
         default:
