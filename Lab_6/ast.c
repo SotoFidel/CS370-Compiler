@@ -20,14 +20,12 @@ void printTabs(int level) {
 void ASTprint(ASTNode *p, int level)
 {
     if (p == NULL) return;
-    
+    char *type;
     switch (p->Type) 
     {
         case varDeclaration:   
             printTabs(level);
             printf("varDeclaration found.\n");
-            printTabs(level);
-            char *type;
             switch (p->dataType) 
             {
                 case intType:
@@ -40,34 +38,72 @@ void ASTprint(ASTNode *p, int level)
                     type = "void";
                 break;
                 default:
-                    type = "undetermined?";
+                    type = "ERROR";
                 break;
             }
+            printTabs(level);
             printf("Type: %s\n", type);
+
             printTabs(level);
             printf("Name: %s\n", p->name);
+
             printTabs(level);
             printf("Size: %d\n\n", p->size);
+
             ASTprint(p->s1, level + 1);
             ASTprint(p->s2, level + 1);
         break;
         
         case funDeclaration:
-        printTabs(level);
-        printf("funDeclaration found.\n");
+            printTabs(level);
+            printf("funDeclaration found.\n");
+            switch (p->dataType) 
+            {
+                case intType:
+                    type = "int";
+                break;
+                case boolType:
+                    type = "bool";
+                break;
+                case voidType:
+                    type = "void";
+                break;
+                default:
+                    type = "ERROR";
+                break;
+            }
+
+            printTabs(level);
+            printf("Return type: %s\n", type);
+
+            printTabs(level);
+            printf("Name: %s\n", p->name);
+
+            printTabs(level);
+            printf("Parameters: ");
+            ASTprint(p->s1, level + 1);
+            printf("\n");
+
+            printTabs(level);
+            printf("Body: ");
+            ASTprint(p->s2, level + 1);
         break;
         
+        case param:
+            printTabs(level);
+            printf("Parameter found\n");
+        break;
+
         case body:
-        printTabs(level);
-        printf("body found.\n");
+            printf("body found.\n");
         break;
         
         case expression:
-        printTabs(level);
-        printf("expression found.\n");
-        printf("Operator is ");
-        ASTprint(p->s1, level +1);
-        ASTprint(p->s2, level +1);
+            printTabs(level);
+            printf("expression found.\n");
+            printf("Operator is ");
+            ASTprint(p->s1, level +1);
+            ASTprint(p->s2, level +1);
         break;
         
         default:
