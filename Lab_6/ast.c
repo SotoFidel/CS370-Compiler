@@ -80,7 +80,7 @@ void ASTprint(ASTNode *p, int level)
             printf("Name: %s\n", p->name);
 
             printTabs(level);
-            printf("Parameters: ");
+            printf("Parameters: \n");
             ASTprint(p->s1, level + 1);
             printf("\n");
 
@@ -91,11 +91,36 @@ void ASTprint(ASTNode *p, int level)
         
         case param:
             printTabs(level);
-            printf("Parameter found\n");
+            printf("Parameter found.\n");
+            switch (p->dataType) 
+            {
+                case intType:
+                    type = "int";
+                break;
+                case boolType:
+                    type = "bool";
+                break;
+                case voidType:
+                    type = "void";
+                break;
+                default:
+                    type = "ERROR";
+                break;
+            }
+            printTabs(level);
+            printf("Type: %s\n", type);
+
+            printTabs(level);
+            printf("Name: %s\n", p->name);
+
+            //ASTprint(p->next, level + 1);
+            // ASTprint(p->s2, level + 1);
         break;
 
         case body:
             printf("body found.\n");
+            ASTprint(p->s1, level +1);
+            ASTprint(p->s2, level +1);
         break;
         
         case expression:
@@ -104,6 +129,11 @@ void ASTprint(ASTNode *p, int level)
             printf("Operator is ");
             ASTprint(p->s1, level +1);
             ASTprint(p->s2, level +1);
+        break;
+
+        case myWrite:
+            printTabs(level);
+            printf("Write statement found.\n");
         break;
         
         default:
