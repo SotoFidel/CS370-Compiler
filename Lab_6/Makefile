@@ -2,8 +2,8 @@
 #
 #	Makefile
 #	Fidel Soto
-#	March 1, 2020
-#	Compiles the C, Lex, and Yacc files into one executable (lab5)
+#	March 15, 2020
+#	Compiles the C, Lex, and Yacc files into one executable (lab6)
 #
 
 all:

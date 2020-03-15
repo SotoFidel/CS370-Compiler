@@ -12,8 +12,8 @@ enum NODETYPE
     body,
     myWrite,
     myNum,
-    expression
-    //and so forth
+    expression,
+    variable
 }; // end of enum NODETYPE
 
 enum DATATYPE
@@ -21,23 +21,30 @@ enum DATATYPE
     intType,
     boolType,
     voidType
-};
+}; // end of enum DATATYPE
 
 enum OPERATOR
 {
     plus, 
-    minus
-};
+    minus,
+    mult,
+    division,
+    myAnd,
+    myOr
+}; // end of enum OPERATOR
 
 typedef struct ASTNodeType
 {
     enum NODETYPE Type;
-    char *name;
     enum DATATYPE dataType;
-    int size;
-    struct ASTNodeType *s1, *s2, *next;
     enum OPERATOR operator;
-} ASTNode;
+    
+    char *name;
+    int size;
+    
+    struct ASTNodeType *s1, *s2, *next;
+    
+} ASTNode;  // end of struct definition
 
 void printTabs(int level);
 

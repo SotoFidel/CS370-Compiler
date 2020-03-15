@@ -55,5 +55,4 @@ do                      { return (DO); }
 
 int yywrap()
 {
-	fprintf(stderr, "Done\n");
 }

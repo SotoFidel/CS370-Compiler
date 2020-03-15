@@ -50,9 +50,11 @@
 
 %type <node> varList varDeclaration declaration declarationList funDeclaration params param paramsList
 %type <node> compoundStatement statement statementList localDeclarations writeStatment
-%type <node> expression simpleExpression additiveExpression term factor
+%type <node> expression simpleExpression additiveExpression term factor var
+
 %type < type > typeSpecifier
-%type < opType > addop
+
+%type < opType > addop multop
 %%
 
 program            :   declarationList  { GlobalPointer = $1; }
@@ -215,8 +217,16 @@ writeStatment       :   WRITE expression ';'    {
 expression          :   simpleExpression    { $$ = $1; }
             ;
             
-var                 :   ID '[' expression ']'
-            |   ID
+var                 :   ID '[' expression ']'   {
+                                                    $$ = ASTCreateNode(variable);
+                                                    $$->name = $1;
+                                                    $$->s1 = $3;
+                                                }
+            |   ID  {
+                        $$ = ASTCreateNode(variable);
+                        $$->name = $1;
+                        $$->s1 = NULL;
+                    }
             ;
             
 simpleExpression    :   additiveExpression  { $$ = $1; }
@@ -236,6 +246,7 @@ additiveExpression  :   term    { $$ = $1; }
             |  additiveExpression addop term { 
                                                 $$ = ASTCreateNode(expression);
                                                 $$->s1 = $1;
+                                                $$->operator = $2;
                                                 $$->s2 = $3;
                                              }
             ;
@@ -245,22 +256,27 @@ addop               :   '+' { $$ = plus; }
             ;
             
 term                :   factor  { $$ = $1; }
-            |   term multop factor  { $$ = NULL ; }
+            |   term multop factor  { 
+                                        $$ = ASTCreateNode(expression);
+                                        $$->s1 = $1;
+                                        $$->operator = $2;
+                                        $$->s2 = $3;
+                                    }
             ;
 
             
-multop          :   '*'
-            |   '/'
-            |   AND
-            |   OR
+multop          :   '*' { $$ = mult; }
+            |   '/' { $$ = division; }
+            |   AND { $$ = myAnd; }
+            |   OR  { $$ = myOr; }
             ;
             
-factor          :   '(' expression ')'  { $$ = NULL; }
+factor          :   '(' expression ')'  { $$ = $2; }
             |   NUM {
                         $$ = ASTCreateNode(myNum);
                         $$->size = $1;
                     }
-            |   var { $$ = NULL; }
+            |   var { $$ = $1; }
             |   call    { $$ = NULL; }
             |   TRUE    { $$ = NULL; }
             |   FALSE   {  $$ = NULL; }
