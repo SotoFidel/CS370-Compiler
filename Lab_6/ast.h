@@ -11,9 +11,11 @@ enum NODETYPE
     param,
     body,
     myWrite,
+    myRead,
     myNum,
     expression,
-    variable
+    variable,
+    myCall
 }; // end of enum NODETYPE
 
 enum DATATYPE
@@ -30,7 +32,8 @@ enum OPERATOR
     mult,
     division,
     myAnd,
-    myOr
+    myOr,
+    myNot
 }; // end of enum OPERATOR
 
 typedef struct ASTNodeType

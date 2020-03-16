@@ -177,6 +177,12 @@ void ASTprint(ASTNode *p, int level)
             ASTprint(p->s1, level + 1);
         break;
         
+        case myRead:
+            printTabs(level);
+            printf("Read statement found.\n");
+            ASTprint(p->s1, level + 1);
+        break;
+        
         case myNum:
             printTabs(level);
             printf("Number found\n");
@@ -189,7 +195,8 @@ void ASTprint(ASTNode *p, int level)
             if (p->s1 == NULL)
             {
                 printf("Variable found\n");
-                printf("Name: %s", p->name);
+                printTabs(level);
+                printf("Name: %s\n", p->name);
             }
             else 
             {
@@ -200,6 +207,22 @@ void ASTprint(ASTNode *p, int level)
                 printf("Index:\n");
                 ASTprint(p->s1, level + 1);
             }
+        break;
+        
+        case myCall:
+            
+            printTabs(level);
+            printf("Function call found.\n");
+            
+            printTabs(level);
+            printf("Name: %s\n", p->name);
+            
+            printTabs(level);
+            printf("Arguments:\n");
+            ASTprint(p->s1, level + 1);
+            
+            printTabs(level);
+            printf("END of function call\n");
         break;
         
         default:

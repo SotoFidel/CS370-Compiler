@@ -49,8 +49,9 @@
 %token < typeString > ID
 
 %type <node> varList varDeclaration declaration declarationList funDeclaration params param paramsList
-%type <node> compoundStatement statement statementList localDeclarations writeStatment
-%type <node> expression simpleExpression additiveExpression term factor var
+%type <node> compoundStatement statement statementList localDeclarations writeStatment readStatement
+%type <node> expression simpleExpression additiveExpression term factor var call args argsList
+%type <node> expressionStatement
 
 %type < type > typeSpecifier
 
@@ -160,7 +161,10 @@ compoundStatement  :    MYBEGIN localDeclarations statementList END {
             ;
             
 localDeclarations  :    /* Empty */ { $$ = NULL; }
-            |   varDeclaration localDeclarations    { $1->next = $2; $$ = $1; }
+            |   varDeclaration localDeclarations    { 
+                                                        $1->next = $2;
+                                                        $$ = $1;
+                                                    }
             ;
             
 statementList      :    /* Empty */ { $$ = NULL; }
@@ -177,18 +181,18 @@ statementList      :    /* Empty */ { $$ = NULL; }
                                         }
             ;
             
-statement          :    expressionStatement { $$ = NULL; }
+statement          :    expressionStatement { $$ = $1; }
             |   compoundStatement { $$ = $1; }
             |   selectionStatement { $$ = NULL; }
             |   iterationStatement { $$ = NULL; }
             |   assignmentStatement { $$ = NULL; }
             |   returnStatement { $$ = NULL; }
-            |   readStatement { $$ = NULL; }
+            |   readStatement { $$ = $1; }
             |   writeStatment { $$ = $1; }
             ;
             
-expressionStatement :   expression ';'
-            |   ';'
+expressionStatement :   expression ';'  { $$ = $1; }
+            |   ';' { $$ = NULL; }
             ;
             
 selectionStatement  :   IF expression THEN statement
@@ -205,7 +209,10 @@ returnStatement     : MYRETURN expression ';'
             |   MYRETURN ';'
             ;
             
-readStatement       :   READ var ';'
+readStatement       :   READ var ';'    {
+                                            $$ = ASTCreateNode(myRead);
+                                            $$->s1 = $2;
+                                        }
             ;
             
 writeStatment       :   WRITE expression ';'    {
@@ -277,21 +284,38 @@ factor          :   '(' expression ')'  { $$ = $2; }
                         $$->size = $1;
                     }
             |   var { $$ = $1; }
-            |   call    { $$ = NULL; }
-            |   TRUE    { $$ = NULL; }
-            |   FALSE   {  $$ = NULL; }
-            |   NOT factor  { $$ = NULL; }
+            |   call    { $$ = $1; }
+            |   TRUE    {
+                            $$ = ASTCreateNode(myNum);
+                            $$->size = 1;
+                        }
+            |   FALSE   {  
+                            $$ = ASTCreateNode(myNum);
+                            $$->size = 0;
+                        }
+            |   NOT factor  { 
+                                $$ = ASTCreateNode(expression);
+                                $$->operator = myNot;
+                                $$->s1 = $2;
+                            }
             ;
             
-call            :   ID '(' args ')'
+call            :   ID '(' args ')' {
+                                        $$ = ASTCreateNode(myCall);
+                                        $$->name = $1;
+                                        $$->s1 = $3;
+                                    }
             ;
             
-args            :   /* Empty */
-            |   argsList
+args            :   /* Empty */ { $$ = NULL; }
+            |   argsList    { $$ = $1; }
             ;
             
-argsList        :   expression ',' argsList
-            |   expression
+argsList        :   expression { $$ = $1; }
+            |   expression ',' argsList { 
+                                            $$->next = $3;
+                                            $$ = $1;
+                                        }
             ;
 
 %%

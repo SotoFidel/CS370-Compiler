@@ -516,14 +516,14 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    60,    60,    63,    64,    70,    71,    74,    86,    91,
-      96,   102,   110,   113,   116,   121,   130,   131,   134,   135,
-     141,   147,   155,   162,   163,   166,   167,   180,   181,   182,
-     183,   184,   185,   186,   187,   190,   191,   194,   195,   198,
-     201,   204,   205,   208,   211,   217,   220,   225,   232,   233,
-     236,   237,   238,   239,   240,   241,   245,   246,   254,   255,
-     258,   259,   268,   269,   270,   271,   274,   275,   279,   280,
-     281,   282,   283,   286,   289,   290,   293,   294
+       0,    61,    61,    64,    65,    71,    72,    75,    87,    92,
+      97,   103,   111,   114,   117,   122,   131,   132,   135,   136,
+     142,   148,   156,   163,   164,   170,   171,   184,   185,   186,
+     187,   188,   189,   190,   191,   194,   195,   198,   199,   202,
+     205,   208,   209,   212,   218,   224,   227,   232,   239,   240,
+     243,   244,   245,   246,   247,   248,   252,   253,   261,   262,
+     265,   266,   275,   276,   277,   278,   281,   282,   286,   287,
+     288,   292,   296,   303,   310,   311,   314,   315
 };
 #endif
 
@@ -603,9 +603,9 @@ static const yytype_uint8 yydefact[] =
       68,    72,     0,    47,     0,     0,    42,     0,     0,     0,
       74,     0,    22,    26,    35,     0,    51,    52,    50,    53,
       54,    55,     0,    58,    59,     0,    64,    65,    62,    63,
-       0,     0,    43,    44,    41,     0,     0,    77,     0,    75,
+       0,     0,    43,    44,    41,     0,     0,    76,     0,    75,
       66,     0,    49,    57,    61,    37,    39,    46,     0,    73,
-      40,     0,    76,    38
+      40,     0,    77,    38
 };
 
   /* YYPGOTO[NTERM-NUM].  */
@@ -705,7 +705,7 @@ static const yytype_uint8 yyr2[] =
        4,     3,     2,     3,     3,     1,     4,     1,     1,     3,
        1,     1,     1,     1,     1,     1,     1,     3,     1,     1,
        1,     3,     1,     1,     1,     1,     3,     1,     1,     1,
-       1,     1,     2,     4,     0,     1,     3,     1
+       1,     1,     2,     4,     0,     1,     1,     3
 };
 
 
@@ -1392,19 +1392,19 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 60 "lab6.y"
+#line 61 "lab6.y"
     { GlobalPointer = (yyvsp[0].node); }
 #line 1398 "y.tab.c"
     break;
 
   case 3:
-#line 63 "lab6.y"
+#line 64 "lab6.y"
     { (yyval.node) = (yyvsp[0].node); }
 #line 1404 "y.tab.c"
     break;
 
   case 4:
-#line 64 "lab6.y"
+#line 65 "lab6.y"
     { 
                                                     (yyvsp[-1].node) -> next = (yyvsp[0].node);
                                                     (yyval.node) = (yyvsp[-1].node);
@@ -1413,19 +1413,19 @@ yyreduce:
     break;
 
   case 5:
-#line 70 "lab6.y"
+#line 71 "lab6.y"
     { (yyval.node) = (yyvsp[0].node); }
 #line 1419 "y.tab.c"
     break;
 
   case 6:
-#line 71 "lab6.y"
+#line 72 "lab6.y"
     { (yyval.node) = (yyvsp[0].node); }
 #line 1425 "y.tab.c"
     break;
 
   case 7:
-#line 74 "lab6.y"
+#line 75 "lab6.y"
     { 
                                                         (yyval.node) = (yyvsp[-1].node);
                                                         struct ASTNodeType *p;
@@ -1440,7 +1440,7 @@ yyreduce:
     break;
 
   case 8:
-#line 86 "lab6.y"
+#line 87 "lab6.y"
     {
                                     (yyval.node) = ASTCreateNode(varDeclaration);
                                     (yyval.node)->name = (yyvsp[0]. typeString );
@@ -1450,7 +1450,7 @@ yyreduce:
     break;
 
   case 9:
-#line 91 "lab6.y"
+#line 92 "lab6.y"
     {
                                     (yyval.node) = ASTCreateNode(varDeclaration);
                                     (yyval.node)->name = (yyvsp[-3]. typeString );
@@ -1460,7 +1460,7 @@ yyreduce:
     break;
 
   case 10:
-#line 96 "lab6.y"
+#line 97 "lab6.y"
     {
                                     (yyval.node) = ASTCreateNode(varDeclaration);
                                     (yyval.node)->name = (yyvsp[-2]. typeString );
@@ -1471,7 +1471,7 @@ yyreduce:
     break;
 
   case 11:
-#line 102 "lab6.y"
+#line 103 "lab6.y"
     {
                                                 (yyval.node) = ASTCreateNode(varDeclaration);
                                                 (yyval.node)->name = (yyvsp[-5]. typeString );
@@ -1482,7 +1482,7 @@ yyreduce:
     break;
 
   case 12:
-#line 110 "lab6.y"
+#line 111 "lab6.y"
     {
                                 (yyval. type ) = intType;
                             }
@@ -1490,7 +1490,7 @@ yyreduce:
     break;
 
   case 13:
-#line 113 "lab6.y"
+#line 114 "lab6.y"
     {
                                 (yyval. type ) = voidType;
                             }
@@ -1498,7 +1498,7 @@ yyreduce:
     break;
 
   case 14:
-#line 116 "lab6.y"
+#line 117 "lab6.y"
     {
                                 (yyval. type ) = boolType;
                             }
@@ -1506,7 +1506,7 @@ yyreduce:
     break;
 
   case 15:
-#line 121 "lab6.y"
+#line 122 "lab6.y"
     {
                                                                                 (yyval.node) = ASTCreateNode(funDeclaration);
                                                                                 (yyval.node)->name = (yyvsp[-4]. typeString );
@@ -1518,19 +1518,19 @@ yyreduce:
     break;
 
   case 16:
-#line 130 "lab6.y"
+#line 131 "lab6.y"
     { (yyval.node) = NULL; }
 #line 1524 "y.tab.c"
     break;
 
   case 18:
-#line 134 "lab6.y"
+#line 135 "lab6.y"
     { (yyval.node) = (yyvsp[0].node); }
 #line 1530 "y.tab.c"
     break;
 
   case 19:
-#line 135 "lab6.y"
+#line 136 "lab6.y"
     {
                                             (yyval.node)->next = (yyvsp[0].node);
                                             (yyval.node) = (yyvsp[-2].node);
@@ -1539,7 +1539,7 @@ yyreduce:
     break;
 
   case 20:
-#line 141 "lab6.y"
+#line 142 "lab6.y"
     {
                                                         (yyval.node) = ASTCreateNode(param);
                                                         (yyval.node)->dataType = (yyvsp[-3]. type );
@@ -1550,7 +1550,7 @@ yyreduce:
     break;
 
   case 21:
-#line 147 "lab6.y"
+#line 148 "lab6.y"
     {
                                         (yyval.node) = ASTCreateNode(param);
                                         (yyval.node)->dataType = (yyvsp[-1]. type );
@@ -1561,7 +1561,7 @@ yyreduce:
     break;
 
   case 22:
-#line 155 "lab6.y"
+#line 156 "lab6.y"
     {
                                                                         (yyval.node) = ASTCreateNode(body);
                                                                         (yyval.node)->s1 = (yyvsp[-2].node);
@@ -1571,25 +1571,28 @@ yyreduce:
     break;
 
   case 23:
-#line 162 "lab6.y"
+#line 163 "lab6.y"
     { (yyval.node) = NULL; }
 #line 1577 "y.tab.c"
     break;
 
   case 24:
-#line 163 "lab6.y"
-    { (yyvsp[-1].node)->next = (yyvsp[0].node); (yyval.node) = (yyvsp[-1].node); }
-#line 1583 "y.tab.c"
+#line 164 "lab6.y"
+    { 
+                                                        (yyvsp[-1].node)->next = (yyvsp[0].node);
+                                                        (yyval.node) = (yyvsp[-1].node);
+                                                    }
+#line 1586 "y.tab.c"
     break;
 
   case 25:
-#line 166 "lab6.y"
+#line 170 "lab6.y"
     { (yyval.node) = NULL; }
-#line 1589 "y.tab.c"
+#line 1592 "y.tab.c"
     break;
 
   case 26:
-#line 167 "lab6.y"
+#line 171 "lab6.y"
     {
                                             if ((yyvsp[-1].node) ==  NULL)
                                             {
@@ -1601,221 +1604,289 @@ yyreduce:
                                                 (yyval.node) = (yyvsp[-1].node);
                                             }
                                         }
-#line 1605 "y.tab.c"
+#line 1608 "y.tab.c"
     break;
 
   case 27:
-#line 180 "lab6.y"
-    { (yyval.node) = NULL; }
-#line 1611 "y.tab.c"
+#line 184 "lab6.y"
+    { (yyval.node) = (yyvsp[0].node); }
+#line 1614 "y.tab.c"
     break;
 
   case 28:
-#line 181 "lab6.y"
+#line 185 "lab6.y"
     { (yyval.node) = (yyvsp[0].node); }
-#line 1617 "y.tab.c"
+#line 1620 "y.tab.c"
     break;
 
   case 29:
-#line 182 "lab6.y"
+#line 186 "lab6.y"
     { (yyval.node) = NULL; }
-#line 1623 "y.tab.c"
+#line 1626 "y.tab.c"
     break;
 
   case 30:
-#line 183 "lab6.y"
+#line 187 "lab6.y"
     { (yyval.node) = NULL; }
-#line 1629 "y.tab.c"
+#line 1632 "y.tab.c"
     break;
 
   case 31:
-#line 184 "lab6.y"
+#line 188 "lab6.y"
     { (yyval.node) = NULL; }
-#line 1635 "y.tab.c"
+#line 1638 "y.tab.c"
     break;
 
   case 32:
-#line 185 "lab6.y"
+#line 189 "lab6.y"
     { (yyval.node) = NULL; }
-#line 1641 "y.tab.c"
+#line 1644 "y.tab.c"
     break;
 
   case 33:
-#line 186 "lab6.y"
-    { (yyval.node) = NULL; }
-#line 1647 "y.tab.c"
+#line 190 "lab6.y"
+    { (yyval.node) = (yyvsp[0].node); }
+#line 1650 "y.tab.c"
     break;
 
   case 34:
-#line 187 "lab6.y"
+#line 191 "lab6.y"
     { (yyval.node) = (yyvsp[0].node); }
-#line 1653 "y.tab.c"
+#line 1656 "y.tab.c"
+    break;
+
+  case 35:
+#line 194 "lab6.y"
+    { (yyval.node) = (yyvsp[-1].node); }
+#line 1662 "y.tab.c"
+    break;
+
+  case 36:
+#line 195 "lab6.y"
+    { (yyval.node) = NULL; }
+#line 1668 "y.tab.c"
+    break;
+
+  case 43:
+#line 212 "lab6.y"
+    {
+                                            (yyval.node) = ASTCreateNode(myRead);
+                                            (yyval.node)->s1 = (yyvsp[-1].node);
+                                        }
+#line 1677 "y.tab.c"
     break;
 
   case 44:
-#line 211 "lab6.y"
+#line 218 "lab6.y"
     {
                                                     (yyval.node) = ASTCreateNode(myWrite);
                                                     (yyval.node)->s1 = (yyvsp[-1].node);
                                                 }
-#line 1662 "y.tab.c"
+#line 1686 "y.tab.c"
     break;
 
   case 45:
-#line 217 "lab6.y"
+#line 224 "lab6.y"
     { (yyval.node) = (yyvsp[0].node); }
-#line 1668 "y.tab.c"
+#line 1692 "y.tab.c"
     break;
 
   case 46:
-#line 220 "lab6.y"
+#line 227 "lab6.y"
     {
                                                     (yyval.node) = ASTCreateNode(variable);
                                                     (yyval.node)->name = (yyvsp[-3]. typeString );
                                                     (yyval.node)->s1 = (yyvsp[-1].node);
                                                 }
-#line 1678 "y.tab.c"
+#line 1702 "y.tab.c"
     break;
 
   case 47:
-#line 225 "lab6.y"
+#line 232 "lab6.y"
     {
                         (yyval.node) = ASTCreateNode(variable);
                         (yyval.node)->name = (yyvsp[0]. typeString );
                         (yyval.node)->s1 = NULL;
                     }
-#line 1688 "y.tab.c"
+#line 1712 "y.tab.c"
     break;
 
   case 48:
-#line 232 "lab6.y"
+#line 239 "lab6.y"
     { (yyval.node) = (yyvsp[0].node); }
-#line 1694 "y.tab.c"
+#line 1718 "y.tab.c"
     break;
 
   case 49:
-#line 233 "lab6.y"
+#line 240 "lab6.y"
     { (yyval.node) = NULL; }
-#line 1700 "y.tab.c"
+#line 1724 "y.tab.c"
     break;
 
   case 56:
-#line 245 "lab6.y"
+#line 252 "lab6.y"
     { (yyval.node) = (yyvsp[0].node); }
-#line 1706 "y.tab.c"
+#line 1730 "y.tab.c"
     break;
 
   case 57:
-#line 246 "lab6.y"
+#line 253 "lab6.y"
     { 
                                                 (yyval.node) = ASTCreateNode(expression);
                                                 (yyval.node)->s1 = (yyvsp[-2].node);
                                                 (yyval.node)->operator = (yyvsp[-1]. opType );
                                                 (yyval.node)->s2 = (yyvsp[0].node);
                                              }
-#line 1717 "y.tab.c"
+#line 1741 "y.tab.c"
     break;
 
   case 58:
-#line 254 "lab6.y"
+#line 261 "lab6.y"
     { (yyval. opType ) = plus; }
-#line 1723 "y.tab.c"
+#line 1747 "y.tab.c"
     break;
 
   case 59:
-#line 255 "lab6.y"
+#line 262 "lab6.y"
     { (yyval. opType ) = minus; }
-#line 1729 "y.tab.c"
+#line 1753 "y.tab.c"
     break;
 
   case 60:
-#line 258 "lab6.y"
+#line 265 "lab6.y"
     { (yyval.node) = (yyvsp[0].node); }
-#line 1735 "y.tab.c"
+#line 1759 "y.tab.c"
     break;
 
   case 61:
-#line 259 "lab6.y"
+#line 266 "lab6.y"
     { 
                                         (yyval.node) = ASTCreateNode(expression);
                                         (yyval.node)->s1 = (yyvsp[-2].node);
                                         (yyval.node)->operator = (yyvsp[-1]. opType );
                                         (yyval.node)->s2 = (yyvsp[0].node);
                                     }
-#line 1746 "y.tab.c"
-    break;
-
-  case 62:
-#line 268 "lab6.y"
-    { (yyval. opType ) = mult; }
-#line 1752 "y.tab.c"
-    break;
-
-  case 63:
-#line 269 "lab6.y"
-    { (yyval. opType ) = division; }
-#line 1758 "y.tab.c"
-    break;
-
-  case 64:
-#line 270 "lab6.y"
-    { (yyval. opType ) = myAnd; }
-#line 1764 "y.tab.c"
-    break;
-
-  case 65:
-#line 271 "lab6.y"
-    { (yyval. opType ) = myOr; }
 #line 1770 "y.tab.c"
     break;
 
-  case 66:
-#line 274 "lab6.y"
-    { (yyval.node) = (yyvsp[-1].node); }
+  case 62:
+#line 275 "lab6.y"
+    { (yyval. opType ) = mult; }
 #line 1776 "y.tab.c"
     break;
 
+  case 63:
+#line 276 "lab6.y"
+    { (yyval. opType ) = division; }
+#line 1782 "y.tab.c"
+    break;
+
+  case 64:
+#line 277 "lab6.y"
+    { (yyval. opType ) = myAnd; }
+#line 1788 "y.tab.c"
+    break;
+
+  case 65:
+#line 278 "lab6.y"
+    { (yyval. opType ) = myOr; }
+#line 1794 "y.tab.c"
+    break;
+
+  case 66:
+#line 281 "lab6.y"
+    { (yyval.node) = (yyvsp[-1].node); }
+#line 1800 "y.tab.c"
+    break;
+
   case 67:
-#line 275 "lab6.y"
+#line 282 "lab6.y"
     {
                         (yyval.node) = ASTCreateNode(myNum);
                         (yyval.node)->size = (yyvsp[0]. typeInt );
                     }
-#line 1785 "y.tab.c"
-    break;
-
-  case 68:
-#line 279 "lab6.y"
-    { (yyval.node) = (yyvsp[0].node); }
-#line 1791 "y.tab.c"
-    break;
-
-  case 69:
-#line 280 "lab6.y"
-    { (yyval.node) = NULL; }
-#line 1797 "y.tab.c"
-    break;
-
-  case 70:
-#line 281 "lab6.y"
-    { (yyval.node) = NULL; }
-#line 1803 "y.tab.c"
-    break;
-
-  case 71:
-#line 282 "lab6.y"
-    {  (yyval.node) = NULL; }
 #line 1809 "y.tab.c"
     break;
 
-  case 72:
-#line 283 "lab6.y"
-    { (yyval.node) = NULL; }
+  case 68:
+#line 286 "lab6.y"
+    { (yyval.node) = (yyvsp[0].node); }
 #line 1815 "y.tab.c"
     break;
 
+  case 69:
+#line 287 "lab6.y"
+    { (yyval.node) = (yyvsp[0].node); }
+#line 1821 "y.tab.c"
+    break;
 
-#line 1819 "y.tab.c"
+  case 70:
+#line 288 "lab6.y"
+    {
+                            (yyval.node) = ASTCreateNode(myNum);
+                            (yyval.node)->size = 1;
+                        }
+#line 1830 "y.tab.c"
+    break;
+
+  case 71:
+#line 292 "lab6.y"
+    {  
+                            (yyval.node) = ASTCreateNode(myNum);
+                            (yyval.node)->size = 0;
+                        }
+#line 1839 "y.tab.c"
+    break;
+
+  case 72:
+#line 296 "lab6.y"
+    { 
+                                (yyval.node) = ASTCreateNode(expression);
+                                (yyval.node)->operator = myNot;
+                                (yyval.node)->s1 = (yyvsp[0].node);
+                            }
+#line 1849 "y.tab.c"
+    break;
+
+  case 73:
+#line 303 "lab6.y"
+    {
+                                        (yyval.node) = ASTCreateNode(myCall);
+                                        (yyval.node)->name = (yyvsp[-3]. typeString );
+                                        (yyval.node)->s1 = (yyvsp[-1].node);
+                                    }
+#line 1859 "y.tab.c"
+    break;
+
+  case 74:
+#line 310 "lab6.y"
+    { (yyval.node) = NULL; }
+#line 1865 "y.tab.c"
+    break;
+
+  case 75:
+#line 311 "lab6.y"
+    { (yyval.node) = (yyvsp[0].node); }
+#line 1871 "y.tab.c"
+    break;
+
+  case 76:
+#line 314 "lab6.y"
+    { (yyval.node) = (yyvsp[0].node); }
+#line 1877 "y.tab.c"
+    break;
+
+  case 77:
+#line 315 "lab6.y"
+    { 
+                                            (yyval.node)->next = (yyvsp[0].node);
+                                            (yyval.node) = (yyvsp[-2].node);
+                                        }
+#line 1886 "y.tab.c"
+    break;
+
+
+#line 1890 "y.tab.c"
 
       default: break;
     }
@@ -2047,7 +2118,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 297 "lab6.y"
+#line 321 "lab6.y"
 
 
 int main() 
