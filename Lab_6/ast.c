@@ -22,8 +22,6 @@ void printTabs(int level) {
 
 void ASTprint(ASTNode *p, int level)
 {
-    if (level == 0)
-        printf("\n\n"); 
     if (p == NULL) return;
     char *type;
     char *op;
@@ -33,7 +31,7 @@ void ASTprint(ASTNode *p, int level)
         case varDeclaration:   
             
             printTabs(level);
-            printf("varDeclaration found.\n");
+            printf("VARIABLE DEC: ");
             
             switch (p->dataType) 
             {
@@ -51,17 +49,18 @@ void ASTprint(ASTNode *p, int level)
                 break;
             }
             
-            printTabs(level);
-            printf("Type: %s\n", type);
+            printf("%s ", type);
 
-            printTabs(level);
-            printf("Name: %s\n", p->name);
+            printf(" %s ", p->name);
 
-            printTabs(level);
-            printf("Size: %d\n\n", p->size);
+            if (p->size > 1)
+            {
+                printf("[%d]", p->size);
+            }
+            printf("\n");
 
-            ASTprint(p->s1, level + 1);
-            ASTprint(p->s2, level + 1);
+            ASTprint(p->s1, level);
+            ASTprint(p->s2, level);
         break;
         
         case funDeclaration:
@@ -91,12 +90,26 @@ void ASTprint(ASTNode *p, int level)
 
             printTabs(level);
             printf("Parameters: \n");
-            ASTprint(p->s1, level + 1);
+            if (p->s1 != NULL)
+            {
+                ASTprint(p->s1, level + 1);
+            }
+            else
+            {
+                printf("VOID\n");
+            }
+            
+            printTabs(level);
+            printf("END of parameters\n");
+            
             printf("\n");
-
+            
             printTabs(level);
             printf("Body:\n");
             ASTprint(p->s2, level + 1);
+            
+            printTabs(level);
+            printf("END of body\n");
             
             printTabs(level);
             printf("END of funDeclaration\n");
@@ -121,21 +134,24 @@ void ASTprint(ASTNode *p, int level)
                 break;
             }
             printTabs(level);
-            printf("Type: %s\n", type);
+            printf("Type: %s", type);
+            
+            if (p->size == -1)
+            {
+                printf(" array");
+            }
+            
+            printf("\n");
 
             printTabs(level);
             printf("Name: %s\n", p->name);
         break;
 
         case body:
-            printTabs(level);
-            printf("body found.\n");
             
             ASTprint(p->s1, level +1);
             ASTprint(p->s2, level +1);
             
-            printTabs(level);
-            printf("END of body\n");
         break;
         
         case expression:
@@ -171,6 +187,30 @@ void ASTprint(ASTNode *p, int level)
 
                 case myNot:
                     op = "not";
+                break;
+                
+                case le:
+                    op = "LE";
+                break;
+                
+                case lt:
+                    op = "LT";
+                break;
+                
+                case gt:
+                    op = "GT";
+                break;
+                
+                case ge:
+                    op = "GE";
+                break;
+                
+                case eq:
+                    op = "EQ";
+                break;
+                
+                case ne:
+                    op = "NE";
                 break;
 
                 default: op = "ERROR";
@@ -269,12 +309,58 @@ void ASTprint(ASTNode *p, int level)
         case iteration:
             printTabs(level);
             printf("Iteration statement found.\n");
+            
+            printTabs(level);
+            printf("Condition:\n");
+            ASTprint(p->s1, level + 1);
+            
+            printTabs(level);
+            printf("END of condition\n");
+            
+            printTabs(level);
+            printf("Body:\n");
+            ASTprint(p->s2, level + 1);
+            
+            printTabs(level);
+            printf("END of iteration statment \n");
+        break;
+        
+        case selection:
+            printTabs(level);
+            printf("Selection statement found\n");
+            
+            printTabs(level);
+            printf("Condition:\n");
+            ASTprint(p->s1, level + 1);
+            
+            printTabs(level);
+            printf("END of condition\n");
+            
+            ASTprint(p->s2, level);
+            
+            printTabs(level);
+            printf("END of selection statement\n");
+            
+        break;
+        
+        case selectionBody:
+            printTabs(level);
+            printf("Positive Statement:\n");
+            ASTprint(p->s1, level + 1);
+            
+            if (p->s2 != NULL)
+            {
+                printTabs(level);
+                printf("Negative statement: \n");
+                ASTprint(p->s2, level + 1);
+            }
+            
         break;
         
         default:
             printf("UNKNOWN type in ASTprint\n");
     }
-
+    
     ASTprint (p -> next, level);
 
 }

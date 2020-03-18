@@ -19,7 +19,9 @@ enum NODETYPE
     myCall,
     myReturn,
     selection,
+    selectionBody,
     iteration,
+    
 }; // end of enum NODETYPE
 
 enum DATATYPE
@@ -39,6 +41,12 @@ enum OPERATOR
     myAnd,
     myOr,
     myNot,
+    le,
+    lt,
+    gt,
+    ge,
+    eq,
+    ne
 }; // end of enum OPERATOR
 
 typedef struct ASTNodeType

@@ -55,7 +55,7 @@
 
 %type < type > typeSpecifier
 
-%type < opType > addop multop
+%type < opType > addop multop relop
 %%
 
 program            :   declarationList  { GlobalPointer = $1; }
@@ -197,9 +197,16 @@ expressionStatement :   expression ';'  { $$ = $1; }
             
 selectionStatement  :   IF expression THEN statement    {
                                                             $$ = ASTCreateNode(selection);
+                                                            $$->s1 = $2;
+                                                            $$->s2 = ASTCreateNode(selectionBody);
+                                                            $$->s2->s1 = $4;
                                                         }
             |   IF expression THEN statement ELSE statement {
                                                                 $$ = ASTCreateNode(selection);
+                                                                $$->s1 = $2;
+                                                                $$->s2 = ASTCreateNode(selectionBody);
+                                                                $$->s2->s1 = $4;
+                                                                $$->s2->s2 = $6;
                                                             }
             ;
             
@@ -255,15 +262,20 @@ var                 :   ID '[' expression ']'   {
             ;
             
 simpleExpression    :   additiveExpression  { $$ = $1; }
-            |   simpleExpression relop additiveExpression   { $$ = NULL; }
+            |   simpleExpression relop additiveExpression   {
+                                                                $$ = ASTCreateNode(expression);
+                                                                $$->s1 = $1;
+                                                                $$->operator = $2;
+                                                                $$->s2 = $3;
+                                                            }
             ;
             
-relop               :   LE
-            |   LT
-            |   GT
-            |   GE
-            |   EQ
-            |   NE
+relop               :   LE  { $$ = le; }
+            |   LT  { $$ = lt; }
+            |   GT  { $$ = gt; }
+            |   GE  { $$ = ge; }
+            |   EQ  { $$ = eq; }
+            |   NE  { $$ = ne; }
             ;
             
             
