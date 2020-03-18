@@ -148,21 +148,31 @@ void ASTprint(ASTNode *p, int level)
                 case plus:
                     op = "plus";
                 break;
+
                 case minus:
                     op = "minus";
                 break;
+
                 case mult:
                     op = "multiplication";
                 break;
+
                 case division:
                     op = "division";
                 break;
+
                 case myAnd:
                     op = "and";
                 break;
+
                 case myOr:
                     op = "or";
                 break;
+
+                case myNot:
+                    op = "not";
+                break;
+
                 default: op = "ERROR";
             }
             printf("Operator: %s\n", op);
@@ -224,9 +234,47 @@ void ASTprint(ASTNode *p, int level)
             printTabs(level);
             printf("END of function call\n");
         break;
+
+        case myReturn:
+            printTabs(level);
+            printf("Return statement found.\n");
+            if (p->s1 != NULL)
+            {
+                printTabs(level);
+                printf("Return values:\n");
+                ASTprint(p->s1, level + 1);
+            }
+
+        break;
+
+        case assignment:
+            printTabs(level);
+            printf("Assignment statement found.\n");
+
+            ASTprint(p->s1, level + 1);
+
+            printTabs(level);
+            if (p->operator == equals)
+            {
+                printf("Operator: equals\n");
+            }
+            else 
+            {
+                printf("ERROR\n");
+            }
+            
+            ASTprint(p->s2, level + 1);
+        break;
+
+        case iteration:
+            printTabs(level);
+            printf("Iteration statement found.\n");
+        break;
         
         default:
             printf("UNKNOWN type in ASTprint\n");
     }
+
     ASTprint (p -> next, level);
+
 }

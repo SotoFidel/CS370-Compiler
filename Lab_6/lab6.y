@@ -51,7 +51,7 @@
 %type <node> varList varDeclaration declaration declarationList funDeclaration params param paramsList
 %type <node> compoundStatement statement statementList localDeclarations writeStatment readStatement
 %type <node> expression simpleExpression additiveExpression term factor var call args argsList
-%type <node> expressionStatement
+%type <node> expressionStatement returnStatement assignmentStatement selectionStatement iterationStatement
 
 %type < type > typeSpecifier
 
@@ -183,10 +183,10 @@ statementList      :    /* Empty */ { $$ = NULL; }
             
 statement          :    expressionStatement { $$ = $1; }
             |   compoundStatement { $$ = $1; }
-            |   selectionStatement { $$ = NULL; }
-            |   iterationStatement { $$ = NULL; }
-            |   assignmentStatement { $$ = NULL; }
-            |   returnStatement { $$ = NULL; }
+            |   selectionStatement { $$ = $1; }
+            |   iterationStatement { $$ = $1; }
+            |   assignmentStatement { $$ = $1; }
+            |   returnStatement { $$ = $1; }
             |   readStatement { $$ = $1; }
             |   writeStatment { $$ = $1; }
             ;
@@ -195,18 +195,36 @@ expressionStatement :   expression ';'  { $$ = $1; }
             |   ';' { $$ = NULL; }
             ;
             
-selectionStatement  :   IF expression THEN statement
-            |   IF expression THEN statement ELSE statement
+selectionStatement  :   IF expression THEN statement    {
+                                                            $$ = ASTCreateNode(selection);
+                                                        }
+            |   IF expression THEN statement ELSE statement {
+                                                                $$ = ASTCreateNode(selection);
+                                                            }
             ;
             
-iterationStatement  :   WHILE expression DO statement
+iterationStatement  :   WHILE expression DO statement   {
+                                                            $$ = ASTCreateNode(iteration);
+                                                            $$->s1 = $2;
+                                                            $$->s2 = $4;
+                                                        }
             ;
             
-assignmentStatement :   var '=' simpleExpression ';'
+assignmentStatement :   var '=' simpleExpression ';'    {
+                                                            $$ = ASTCreateNode(assignment);
+                                                            $$->s1 = $1;
+                                                            $$->operator = equals;
+                                                            $$->s2 = $3;
+                                                        }
             ;
             
-returnStatement     : MYRETURN expression ';'
-            |   MYRETURN ';'
+returnStatement     : MYRETURN expression ';'   {
+                                                    $$ = ASTCreateNode(myReturn);
+                                                    $$->s1 = $2;
+                                                }
+            |   MYRETURN ';'    {
+                                    $$ = ASTCreateNode(myReturn);
+                                }
             ;
             
 readStatement       :   READ var ';'    {

@@ -15,4 +15,14 @@ myFunction();
 
 myFunction2(7*33, 32, 0, 987);
 
+myVar = 5 + 1;
+
+while  i <= 10  do
+begin  
+    x=i;
+    i[x+4 <= 10 ]=i+1;
+end
+
+return not true;
+
 end
