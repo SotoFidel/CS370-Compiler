@@ -1,15 +1,18 @@
 %{
-    /* LAB 5: C-ALGOL LEX ROUTINE*/
+    /* LAB 6: C-ALGOL LEX ROUTINE*/
     /*
         Written by: Fidel Soto
     */
     /*
         Date: March 1, 2020
-
         INITIAL IMPLEMENTATION:
             *Implemented lex rules that adhere to the C-Algol specification.
                 For now, the lex routine returns tokens and will print out
                 constants that it comes accross.
+        
+
+        Date: March 20, 2020
+        NO CHANGES TO THIS FILE
     */
     #include "ast.h"
     #include "y.tab.h"

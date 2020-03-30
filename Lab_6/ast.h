@@ -1,4 +1,17 @@
-//ast.h
+    /* ast.h */
+    /*
+        Written by: Fidel Soto
+    */
+   /*
+        Date: March 21, 2020
+        ADDED NODE AND ENUMS DECLARATIONS:
+            *Added enumerators for NODETYPE, DATATYPE, and OPERATOR.
+            *Added struct ASTNode. Each node is either s1,s2, or 'next'
+                connected.
+            *All this info will be used by the YACC file
+            *Added function prototypes
+   */
+
 
 #ifndef AST
 

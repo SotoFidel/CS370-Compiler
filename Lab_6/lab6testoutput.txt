@@ -1,0 +1,172 @@
+VARIABLE DEC: VOID  x 
+VARIABLE DEC: INT  x [100]
+FUNCTION:
+INT main 
+(
+	VOID
+)
+	BLOCK STATEMENT:
+		VARIABLE DEC: INT  x 
+		BLOCK STATEMENT:
+			VARIABLE DEC: INT  y 
+			ITERATION STATEMENT
+			CONDITION:
+				EXPRESSION:
+					EXPRESSION:
+						IDENTIFIER WITH NAME: x
+						OPERATOR: plus
+						EXPRESSION:
+							NUMBER WITH VALUE: 5
+							OPERATOR: division
+							NUMBER WITH VALUE: 2
+						END OF EXPRESSION
+					END OF EXPRESSION
+					OPERATOR: LE
+					EXPRESSION:
+						EXPRESSION:
+							NUMBER WITH VALUE: 2
+							OPERATOR: plus
+							IDENTIFIER WITH NAME: z
+						END OF EXPRESSION
+						OPERATOR: minus
+						NUMBER WITH VALUE: 5
+					END OF EXPRESSION
+				END OF EXPRESSION
+			END OF CONDITION
+			ITERATION BODY:
+				Selection statement found
+				Condition:
+					EXPRESSION:
+						EXPRESSION:
+							IDENTIFIER WITH NAME: h
+							OPERATOR: minus
+							NUMBER WITH VALUE: 2
+						END OF EXPRESSION
+						OPERATOR: GE
+						EXPRESSION:
+							NUMBER WITH VALUE: 3
+							OPERATOR: minus
+							NUMBER WITH VALUE: 2
+						END OF EXPRESSION
+					END OF EXPRESSION
+				END of condition
+				Positive Statement:
+					READ STATEMENT
+						ARRAY REFERENCE:
+							NAME: x
+							[
+								NUMBER WITH VALUE: 100
+							]
+					END OF READ STATEMENT
+				Negative statement: 
+					WRITE STATEMENT.
+						EXPRESSION:
+							ARRAY REFERENCE:
+								NAME: x
+								[
+									NUMBER WITH VALUE: 100
+								]
+							OPERATOR: plus
+							NUMBER WITH VALUE: 200
+						END OF EXPRESSION
+					END OF WRITE STATEMENT.
+				END of selection statement
+			END OF ITERATION BODY
+			END OF ITERATION STATEMENT
+			FUNCTION CALL:
+			f
+			(
+				EXPRESSION:
+					NUMBER WITH VALUE: 3
+					OPERATOR: plus
+					ARRAY REFERENCE:
+						NAME: x
+						[
+							ARRAY REFERENCE:
+								NAME: x
+								[
+									NUMBER WITH VALUE: 100
+								]
+						]
+				END OF EXPRESSION
+				EXPRESSION:
+					IDENTIFIER WITH NAME: bar
+					OPERATOR: plus
+					NUMBER WITH VALUE: 200
+				END OF EXPRESSION
+				NUMBER WITH VALUE: 20
+			)
+			END OF FUNCTION CALL
+			Return statement found.
+			Return statement found.
+			Return values:
+				EXPRESSION:
+					EXPRESSION:
+						IDENTIFIER WITH NAME: x
+						OPERATOR: plus
+						NUMBER WITH VALUE: 5
+					END OF EXPRESSION
+					OPERATOR: plus
+					NUMBER WITH VALUE: 7
+				END OF EXPRESSION
+			Selection statement found
+			Condition:
+				EXPRESSION:
+					EXPRESSION:
+						IDENTIFIER WITH NAME: x
+						OPERATOR: plus
+						NUMBER WITH VALUE: 10
+					END OF EXPRESSION
+					OPERATOR: GT
+					EXPRESSION:
+						NUMBER WITH VALUE: 10
+						OPERATOR: multiplication
+						NUMBER WITH VALUE: 20
+					END OF EXPRESSION
+				END OF EXPRESSION
+			END of condition
+			Positive Statement:
+				ASSIGNMENT STATEMENT
+					IDENTIFIER WITH NAME: x
+					OPERATOR: equals
+					EXPRESSION:
+						IDENTIFIER WITH NAME: x
+						OPERATOR: NE
+						NUMBER WITH VALUE: 10
+					END OF EXPRESSION
+				END OF ASSIGNMENT STATEMENT
+			END of selection statement
+			WRITE STATEMENT.
+				EXPRESSION:
+					EXPRESSION:
+						EXPRESSION:
+							NUMBER WITH VALUE: 3
+							OPERATOR: and
+							NUMBER WITH VALUE: 5
+						END OF EXPRESSION
+						OPERATOR: or
+						EXPRESSION:
+							NUMBER WITH VALUE: 1
+							OPERATOR: and
+							EXPRESSION:
+								NUMBER WITH VALUE: 0
+								OPERATOR: not
+							END OF EXPRESSION
+						END OF EXPRESSION
+					END OF EXPRESSION
+					OPERATOR: not
+				END OF EXPRESSION
+			END OF WRITE STATEMENT.
+		END OF BLOCK STATEMENT
+	END OF BLOCK STATEMENT
+END OF FUNCTION
+FUNCTION:
+VOID f 
+(
+	PARAMETER: 	INT  x
+	PARAMETER: 	INT  y
+	PARAMETER: 	VOID  z
+)
+	BLOCK STATEMENT:
+	END OF BLOCK STATEMENT
+END OF FUNCTION

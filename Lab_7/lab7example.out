@@ -1,0 +1,40 @@
+
+	LABEL		Offset 	 LEVEL
+	_t4		16		2
+	_t3		15		2
+	_t2		14		2
+	_t1		13		2
+	_t0		12		2
+	x		2		2
+	y		1		1
+	b		0		1
+	f		0		0
+	y		100		0
+	Z		0		0
+
+	LABEL		Offset 	 LEVEL
+	_t9		16		2
+	_t8		15		2
+	_t7		14		2
+	_t6		13		2
+	_t5		12		2
+	x		2		2
+	y		1		1
+	b		0		1
+	f		0		0
+	y		100		0
+	Z		0		0
+
+	LABEL		Offset 	 LEVEL
+	y		1		1
+	b		0		1
+	f		0		0
+	y		100		0
+	Z		0		0
+Main symbol table START 
+
+	LABEL		Offset 	 LEVEL
+	z		101		0
+	f		0		0
+	y		100		0
+	Z		0		0
