@@ -1,0 +1,5 @@
+
+	LABEL		Offset 	 LEVEL
+	x		0		0
+Duplicate Variable on line 2
+x on line 2

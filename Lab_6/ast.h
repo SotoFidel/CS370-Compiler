@@ -34,6 +34,7 @@ enum NODETYPE
     selection,
     selectionBody,
     iteration,
+    argslist
     
 }; // end of enum NODETYPE
 
@@ -80,5 +81,7 @@ void printTabs(int level);
 void ASTprint(ASTNode *p, int level);
 
 ASTNode *ASTCreateNode(enum NODETYPE type);
+
+char *typeToString(enum DATATYPE typeParam);
 
 #endif

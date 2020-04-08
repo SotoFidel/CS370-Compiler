@@ -16,6 +16,15 @@
 #include <stdio.h>
 #include <malloc.h>
 
+    /*
+        variables to use when printing. This is being 
+        done because the DATAYPE and OPERATOR enums
+        are, technically, numbers, and they get printed as such.
+        This aleviates that problem.
+    */ 
+    char *type;
+    char *op;
+
 ASTNode *ASTCreateNode(enum NODETYPE type)
 {
     ASTNode *p;
@@ -42,6 +51,29 @@ void printTabs(int level) {
     }
 }
 
+char *typeToString(enum DATATYPE typeParam) {
+
+    // Datatype of variable declaration
+    switch (typeParam) 
+    {
+        case intType:
+            type = "INT";
+        break;
+        case boolType:
+            type = "BOOL";
+        break;
+        case voidType:
+            type = "VOID";
+        break;
+        default:
+            type = "ERROR";
+        break;
+    } //end of p->datatype switch
+
+}
+
+ 
+
 /**
  * ASTprint function. This will print out information about
  * the node according to what type of node it is.
@@ -50,15 +82,7 @@ void ASTprint(ASTNode *p, int level)
 {
     //base case
     if (p == NULL) return;
-
-    /*
-        variables to use when printing. This is being 
-        done because the DATAYPE and OPERATOR enums
-        are, technically, numbers, and they get printed as such.
-        This aleviates that problem.
-    */ 
-    char *type;
-    char *op;
+    
     switch (p->Type)
     {
         
@@ -67,22 +91,7 @@ void ASTprint(ASTNode *p, int level)
             printTabs(level);
             printf("VARIABLE DEC: ");
             
-            // Datatype of variable declaration
-            switch (p->dataType) 
-            {
-                case intType:
-                    type = "INT";
-                break;
-                case boolType:
-                    type = "BOOL";
-                break;
-                case voidType:
-                    type = "VOID";
-                break;
-                default:
-                    type = "ERROR";
-                break;
-            } //end of p->datatype switch
+            typeToString(p->dataType);
             
             printf("%s ", type);
 
@@ -111,21 +120,7 @@ void ASTprint(ASTNode *p, int level)
             printf("FUNCTION:\n");
 
             //return type
-            switch (p->dataType) 
-            {
-                case intType:
-                    type = "INT";
-                break;
-                case boolType:
-                    type = "BOOL";
-                break;
-                case voidType:
-                    type = "VOID";
-                break;
-                default:
-                    type = "ERROR";
-                break;
-            }
+            typeToString(p->dataType);
 
             printTabs(level);
             printf("%s ", type);
@@ -158,21 +153,7 @@ void ASTprint(ASTNode *p, int level)
         //Parameter or list of parameters
             printTabs(level);
             printf("PARAMETER: ");
-            switch (p->dataType) 
-            {
-                case intType:
-                    type = "INT";
-                break;
-                case boolType:
-                    type = "BOOL";
-                break;
-                case voidType:
-                    type = "VOID";
-                break;
-                default:
-                    type = "ERROR";
-                break;
-            } // end of p->parameter switch
+            typeToString(p->dataType); // end of p->parameter switch
             printTabs(level);
             printf("%s ", type);
 
@@ -353,6 +334,10 @@ void ASTprint(ASTNode *p, int level)
             printTabs(level);
 
             printf("END OF FUNCTION CALL\n");
+        break;
+
+        case argslist:
+            ASTprint(p->s1, level);
         break;
 
         case myReturn:

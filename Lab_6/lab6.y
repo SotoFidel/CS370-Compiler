@@ -472,14 +472,19 @@ args            :   /* Empty */ { $$ = NULL; }
             |   argsList    { $$ = $1; }
             ;
             
-argsList        :   expression { $$ = $1; }
+argsList        :   expression { 
+                                    $$ = ASTCreateNode(argslist);
+                                    $$->s1 = $1;
+                                    $$->next = NULL; 
+                               }
             |   expression ',' argsList {
                                             /*
                                                 List of arguments, connected using
                                                 the 'next' pointer
                                             */
+                                            $$ = ASTCreateNode(argslist);
                                             $$->next = $3;
-                                            $$ = $1;
+                                            $$->s1 = $1;
                                         }
             ;
 
