@@ -13,7 +13,6 @@
                 number. The line number variable is declared in Lab5.l.
             *Tokens will be brought in from the lex routine, with some of them 
                 (namely 'NUM' and 'ID') having  a type coming from a %union{}
-
         
         
         Date: March 20, 2020
@@ -41,6 +40,10 @@
             *Added a variable called 'typeOfData' that will assign a type to variables once they're declared.
             *Added a variabled called 'maxOffset' that will help determine the max offset that a function
              will need at the very least.
+        
+        Date: May 6, 2020
+        Added more functionality to the main() function so that it requires a -o flag followed by a file name, with an optional
+        -d flag for debugging to call ASTprint() and Display() if it is activated
     */
 
     int yylex();
@@ -49,14 +52,15 @@
     #include <ctype.h>
     #include "symtable.h"
     #include "ast.h"
+    #include "emit.h"
    
     
     extern int lineCount;
+    int mydebug = 0;
     int offset = 0;
     int maxOffset = 0;
     int globalOffset = 0;
     int level = 0;
-    int typeofData = -1;
     int maxOffset;
     ASTNode *GlobalPointer;
     
@@ -79,9 +83,9 @@
 }
 
 %token INT AND OR VOID BOOL TRUE FALSE NOT IF THEN ELSE READ WRITE MYRETURN WHILE DO LT
-%token GT LE GE EQ NE MYBEGIN END
+%token GT LE GE EQ NE MYBEGIN END 
 %token < typeInt > NUM
-%token < typeString > ID
+%token < typeString > ID STRING
 
 %type <node> varList varDeclaration declaration declarationList funDeclaration params param paramsList
 %type <node> compoundStatement statement statementList localDeclarations writeStatment readStatement
@@ -126,9 +130,9 @@ varDeclaration     :   typeSpecifier varList ';'    {
                                                         while (p != NULL) 
                                                         {
                                                             p->dataType = $1;
+                                                            p->symbol->Type = $1;
                                                             p = p->s1;
                                                         }
-                                                        Display();
                                                     }
             ;
 
@@ -169,7 +173,7 @@ varList            :    ID      {
                                             2 - Array
                                             TODO: Modify the inserts
                                         */                  
-                                        $$->symbol = Insert($1, typeofData, 0, level, 1, offset, NULL); 
+                                        $$->symbol = Insert($1, -1, 0, level, 1, offset, NULL); 
                                         offset = offset + 1;
                                     }
                                     
@@ -204,7 +208,7 @@ varList            :    ID      {
                                             2 - Array
                                             TODO: Modify the inserts
                                         */          
-                                        $$->symbol = Insert($1, typeofData, 2, level, $3, offset, NULL);
+                                        $$->symbol = Insert($1, -1, 2, level, $3, offset, NULL);
                                        
                                         offset = offset + $3;
                                     }
@@ -242,7 +246,7 @@ varList            :    ID      {
                                         $$->name = $1;
                                         $$->size = 1;
                                         $$-> s1 = $3;    
-                                        $$->symbol = Insert($1, typeofData, 0, level, 1, offset, NULL); 
+                                        $$->symbol = Insert($1, -1, 0, level, 1, offset, NULL); 
                                         offset = offset + 1;
                                        
                                     }
@@ -280,7 +284,7 @@ varList            :    ID      {
                                                     $$->name = $1;
                                                     $$->size = $3;
                                                     $$-> s1 = $6;   
-                                                    $$->symbol = Insert($1, typeofData, 2, level, $3, offset, NULL);
+                                                    $$->symbol = Insert($1, -1, 2, level, $3, offset, NULL);
                                                     offset = offset + $3;
                                                    
                                                 }
@@ -294,21 +298,18 @@ typeSpecifier      :   INT  {
                                     Set the type of data to int
                                 */
                                 $$ = intType;
-                                typeofData = intType;
                             }
             |   VOID        {
                                 /*
                                     Set the type of data to void
                                 */
                                 $$ = voidType;
-                                typeofData = voidType;
                             }
             |   BOOL        {
                                 /*
                                     Set the type of data to int
                                 */
                                 $$ = boolType;
-                                typeofData = boolType;
                             }
             ;
             
@@ -333,11 +334,11 @@ funDeclaration     :   typeSpecifier ID '(' {
                                                         1 - Function 
                                                         2 - Array
                                                         TODO: Modify the inserts
-                                                    */                                                               
+                                                    */                                                             
                                                     Insert($2, $1, 1, level, 0, 0, NULL);
                                                 }
                                                 globalOffset = offset;
-                                                offset = 0;
+                                                offset = 2;
                                                 maxOffset = offset;
                                             } params ')' {
                                                             /*
@@ -370,7 +371,7 @@ funDeclaration     :   typeSpecifier ID '(' {
                                                                                         will be set.
                                                                                     */
                                                                                     Search($2, 0, 0)->mysize = maxOffset;
-                                                                                    Display();
+                                                                                    $$->size = maxOffset;
                                                                                 }
             ;
             
@@ -417,14 +418,15 @@ param              :    typeSpecifier ID '[' ']'    {
                                                         }
                                                         else
                                                         {
-                                                            Insert($2, $1, 2, level + 1, 1, offset, NULL);
+                                                            $$ = ASTCreateNode(param);
+                                                            $$->dataType = $1;
+                                                            $$->name = $2;
+                                                            $$->size = -1;
+                                                            $$->semanticType = $1;
+                                                            $$->symbol = Insert($2, $1, 2, level + 1, 1, offset, NULL);
                                                             offset = offset + 1;
                                                         }
-                                                        $$ = ASTCreateNode(param);
-                                                        $$->dataType = $1;
-                                                        $$->name = $2;
-                                                        $$->size = -1;
-                                                        $$->semanticType = $1;
+                                                       
                                                     }
             |   typeSpecifier ID    {
                                         /*
@@ -444,14 +446,15 @@ param              :    typeSpecifier ID '[' ']'    {
                                         }
                                         else 
                                         {
-                                            Insert($2, $1, 0, level + 1, 1, offset, NULL);
+                                            $$ = ASTCreateNode(param);
+                                            $$->dataType = $1;
+                                            $$->name = $2;
+                                            $$->size = 0;
+                                            $$->semanticType = $1;
+                                            $$->symbol = Insert($2, $1, 0, level + 1, 1, offset, NULL);
                                             offset = offset + 1;
                                         }
-                                        $$ = ASTCreateNode(param);
-                                        $$->dataType = $1;
-                                        $$->name = $2;
-                                        $$->size = 0;
-                                        $$->semanticType = $1;
+                                        
                                     }
             ;
             
@@ -514,8 +517,13 @@ statement          :    expressionStatement { $$ = $1; }
             |   writeStatment { $$ = $1; }
             ;
             
-expressionStatement :   expression ';'  { $$ = $1; }
-            |   ';' { $$ = NULL; }
+expressionStatement :   expression ';'  { 
+                                            $$ = ASTCreateNode(exprStmt);
+                                            $$->s1 = $1;
+                                         }
+            |   ';' { $$ = ASTCreateNode(exprStmt);
+                                            $$->s1 = NULL;
+                    }
             ;
             
 selectionStatement  :   IF expression THEN statement    {
@@ -571,6 +579,11 @@ assignmentStatement :   var '=' simpleExpression ';'    {
                                                                 exit(1);
                                                             }
                                                             $$ = ASTCreateNode(assignment);
+                                                            
+                                                            $$->name=CreateTemp();
+                                                            $$->symbol=Insert($$->name,intType,0,level,1,offset, NULL);
+                                                            offset++;
+
                                                             $$->s1 = $1;
                                                             $$->operator = equals;
                                                             $$->s2 = $3;
@@ -595,6 +608,11 @@ readStatement       :   READ var ';'    {
 writeStatment       :   WRITE expression ';'    {
                                                     $$ = ASTCreateNode(myWrite);
                                                     $$->s1 = $2;
+                                                }
+            |   WRITE STRING ';'                {
+                                                    $$ = ASTCreateNode(myWrite);
+                                                    $$->name = $2;
+                                                    $$->label = genlabel();
                                                 }
             ;
             
@@ -676,6 +694,9 @@ simpleExpression    :   additiveExpression  { $$ = $1; }
                                                                     exit(1);
                                                                 }
                                                                 $$ = ASTCreateNode(expression);
+                                                                $$->name=CreateTemp();
+                                                                $$->symbol=Insert($$->name,intType,0,level,1,offset, NULL);
+                                                                offset++;
                                                                 $$->s1 = $1;
                                                                 $$->operator = $2;
                                                                 $$->s2 = $3;
@@ -705,6 +726,9 @@ additiveExpression  :   term    { $$ = $1; }
                                                     exit(1);
                                                 }
                                                 $$ = ASTCreateNode(expression);
+                                                $$->name=CreateTemp();
+                                                $$->symbol=Insert($$->name,intType,0,level,1,offset, NULL);
+                                                offset++;
                                                 $$->s1 = $1;
                                                 $$->operator = $2;
                                                 $$->s2 = $3;
@@ -729,6 +753,9 @@ term                :   factor  { $$ = $1; }
                                             exit(1);
                                         }
                                         $$ = ASTCreateNode(expression);
+                                        $$->name=CreateTemp();
+                                        $$->symbol=Insert($$->name,intType,0,level,1,offset, NULL);
+                                        offset++;
                                         $$->s1 = $1;
                                         $$->operator = $2;
                                         $$->s2 = $3;
@@ -780,6 +807,9 @@ factor          :   '(' expression ')'  { $$ = $2; }
                                     exit(1);
                                 }
                                 $$ = ASTCreateNode(expression);
+                                $$->name=CreateTemp();
+                                $$->symbol=Insert($$->name,intType,0,level,1,offset, NULL);
+                                offset++;
                                 $$->operator = myNot;
                                 $$->s1 = $2;
                                 $$->semanticType = $2->semanticType;
@@ -824,6 +854,9 @@ args            :   /* Empty */ { $$ = NULL; }
             
 argsList        :   expression { 
                                     $$ = ASTCreateNode(argslist);
+                                    $$->name=CreateTemp();
+                                    $$->symbol=Insert($$->name,intType,0,level,1,offset, NULL);
+                                    offset++;
                                     $$->s1 = $1;
                                     $$->semanticType = $1->semanticType;
                                     $$->next = NULL; 
@@ -834,6 +867,9 @@ argsList        :   expression {
                                                 the 'next' pointer
                                             */
                                             $$ = ASTCreateNode(argslist);
+                                            $$->name=CreateTemp();
+                                            $$->symbol=Insert($$->name,intType,0,level,1,offset, NULL);
+                                            offset++;
                                             $$->semanticType = $1->semanticType;
                                             $$->next = $3;
                                             $$->s1 = $1;
@@ -842,17 +878,88 @@ argsList        :   expression {
 
 %%
 
-int main() 
+/*
+    PRECONDITION: Require a -o flag with a file name, with an optional debug -d flag.
+    POSTCONDITION: Will Parse the input, print out the symbol table and tree structure if -d flag is added,
+    and will emit code to the specified file name
+
+    argc - Argument Count
+    argv - Argument char* vector
+*/
+int main(int argc, char*argv[])  
 {
+    int i = 1;
+    char s[100];
+    FILE *fp; // file pointer
+    int foundIt = 0;
+    while ( i < argc)
+    {
+        // Check if our arguments contain -d
+        if (strcmp(argv[i],"-d") == 0)
+        {
+            printf("Debugging mode activated. Symbol table and AST will be printed\n");
+            mydebug = 1;
+            i++;
+        }
+        else if (strcmp(argv[i], "-o") == 0)
+        {// we assume that i+1 is the file that we want to open (sans the extension)
+            if ( argc > i + 1) foundIt = 1;
+            sprintf(s, "%s.asm",argv[i+1]);
+            i+=2;
+        }
+        else 
+        {
+            i++;
+        }
+
+        // Check for -o with a file name. this MUST be passed as an argument 
+
+    }
+
+    /*
+        We want to open a file descriptor and use that variable
+        to write to the file
+    */
+    if (foundIt == 0){
+        printf("You must provide a -o with an argument\n");
+        exit(1);
+    }
+    fp = fopen(s,"w");
+    if (fp == NULL)
+    {
+        printf("Cannot open file %s\n",s);
+        exit(1);
+    }
+
     yyparse();
     
-    // Print out the table
-    printf("\n\nLAST DISPLAY\n");
-    Display();
+    // Print out the table and tree if -d is added.
+    if (mydebug){
+        printf("\n\nLAST DISPLAY\n");
+        Display();
+        printf("\n\n");
+        ASTprint(GlobalPointer, 0);
+    }
     
-    printf("\n\n");
+    // Define the data segment
+    fprintf(fp, "# Globals\n");
+    fprintf(fp, ".data\n\n");
 
-    // Print out the AST
-    ASTprint(GlobalPointer, 0);
+    // Print out strings with corresponding labels
+    emitStrings(fp, GlobalPointer);
+
+    // NewLine string definition
+    fprintf(fp,"_NL:\t .asciiz\t\"\\n\"\n");
+    fprintf(fp,"\n.align 2\n\n");
+
+    // Emit global variables
+    emitGlobals(fp, GlobalPointer);
+
+    // Print out the text segment, and define main as the main function
+    fprintf(fp, "\n.text\n\n");
+    fprintf(fp, ".globl main");
+
+    // Print out mips code to the file
+    emitAST(GlobalPointer, fp);
     
 }

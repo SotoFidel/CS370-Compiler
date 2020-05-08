@@ -1,0 +1,216 @@
+
+LABEL     	OFFSET    	LEVEL     	SIZE      	TYPE      	ISAFUNC   
+y         	100       	0         	1         	INT       	SCALAR    
+Z         	0         	0         	100       	INT       	ARRAY     
+
+LABEL     	OFFSET    	LEVEL     	SIZE      	TYPE      	ISAFUNC   
+y         	1         	1         	1         	INT       	SCALAR    
+b         	0         	1         	1         	INT       	SCALAR    
+f         	0         	0         	0         	INT       	FUNCTION  
+y         	100       	0         	1         	INT       	SCALAR    
+Z         	0         	0         	100       	INT       	ARRAY     
+
+LABEL     	OFFSET    	LEVEL     	SIZE      	TYPE      	ISAFUNC   
+x         	2         	2         	10        	INT       	ARRAY     
+y         	1         	1         	1         	INT       	SCALAR    
+b         	0         	1         	1         	INT       	SCALAR    
+f         	0         	0         	0         	INT       	FUNCTION  
+y         	100       	0         	1         	INT       	SCALAR    
+Z         	0         	0         	100       	INT       	ARRAY     
+
+LABEL     	OFFSET    	LEVEL     	SIZE      	TYPE      	ISAFUNC   
+x         	2         	2         	10        	INT       	ARRAY     
+y         	1         	1         	1         	INT       	SCALAR    
+b         	0         	1         	1         	INT       	SCALAR    
+f         	0         	0         	0         	INT       	FUNCTION  
+y         	100       	0         	1         	INT       	SCALAR    
+Z         	0         	0         	100       	INT       	ARRAY     
+
+LABEL     	OFFSET    	LEVEL     	SIZE      	TYPE      	ISAFUNC   
+f         	0         	0         	12        	INT       	FUNCTION  
+y         	100       	0         	1         	INT       	SCALAR    
+Z         	0         	0         	100       	INT       	ARRAY     
+
+LABEL     	OFFSET    	LEVEL     	SIZE      	TYPE      	ISAFUNC   
+z         	101       	0         	1         	INT       	SCALAR    
+f         	0         	0         	12        	INT       	FUNCTION  
+y         	100       	0         	1         	INT       	SCALAR    
+Z         	0         	0         	100       	INT       	ARRAY     
+
+LABEL     	OFFSET    	LEVEL     	SIZE      	TYPE      	ISAFUNC   
+main      	0         	0         	2         	INT       	FUNCTION  
+z         	101       	0         	1         	INT       	SCALAR    
+f         	0         	0         	12        	INT       	FUNCTION  
+y         	100       	0         	1         	INT       	SCALAR    
+Z         	0         	0         	100       	INT       	ARRAY     
+
+
+LAST DISPLAY
+
+LABEL     	OFFSET    	LEVEL     	SIZE      	TYPE      	ISAFUNC   
+main      	0         	0         	2         	INT       	FUNCTION  
+z         	101       	0         	1         	INT       	SCALAR    
+f         	0         	0         	12        	INT       	FUNCTION  
+y         	100       	0         	1         	INT       	SCALAR    
+Z         	0         	0         	100       	INT       	ARRAY     
+
+
+VARIABLE DEC: INT  y  -- Has offset: 100 -- Level: 0
+VARIABLE DEC: INT  Z [100] -- Has offset: 0 -- Level: 0
+FUNCTION:
+INT f -- Level: 0 -- Offset: NA 
+(
+	PARAMETER: 	INT  b
+)
+	BLOCK STATEMENT:
+		VARIABLE DEC: INT  y  -- Has offset: 1 -- Level: 1
+		BLOCK STATEMENT:
+			VARIABLE DEC: INT  x [10] -- Has offset: 2 -- Level: 2
+			ASSIGNMENT STATEMENT
+				ARRAY REFERENCE:
+					NAME: x -- Has Offset: 2 -- Level: 2
+					[
+						EXPRESSION:
+							EXPRESSION:
+								NUMBER WITH VALUE: 2
+								OPERATOR: plus
+								NUMBER WITH VALUE: 3
+							END OF EXPRESSION
+							OPERATOR: minus
+							NUMBER WITH VALUE: 5
+						END OF EXPRESSION
+					]
+				OPERATOR: equals
+				EXPRESSION:
+					IDENTIFIER WITH NAME: b -- Offset: 0 -- Level: 0
+					OPERATOR: plus
+					FUNCTION CALL:
+					f
+					(
+						EXPRESSION:
+							NUMBER WITH VALUE: 5
+							OPERATOR: plus
+							EXPRESSION:
+								ARRAY REFERENCE:
+									NAME: x -- Has Offset: 2 -- Level: 2
+									[
+										NUMBER WITH VALUE: 2
+									]
+								OPERATOR: multiplication
+								IDENTIFIER WITH NAME: b -- Offset: 0 -- Level: 0
+							END OF EXPRESSION
+						END OF EXPRESSION
+					)
+					END OF FUNCTION CALL
+				END OF EXPRESSION
+			END OF ASSIGNMENT STATEMENT
+		END OF BLOCK STATEMENT
+		BLOCK STATEMENT:
+			VARIABLE DEC: INT  x [10] -- Has offset: 2 -- Level: 2
+			ASSIGNMENT STATEMENT
+				ARRAY REFERENCE:
+					NAME: x -- Has Offset: 2 -- Level: 2
+					[
+						EXPRESSION:
+							EXPRESSION:
+								NUMBER WITH VALUE: 2
+								OPERATOR: plus
+								NUMBER WITH VALUE: 3
+							END OF EXPRESSION
+							OPERATOR: minus
+							NUMBER WITH VALUE: 5
+						END OF EXPRESSION
+					]
+				OPERATOR: equals
+				EXPRESSION:
+					IDENTIFIER WITH NAME: b -- Offset: 0 -- Level: 0
+					OPERATOR: plus
+					FUNCTION CALL:
+					f
+					(
+						EXPRESSION:
+							NUMBER WITH VALUE: 5
+							OPERATOR: plus
+							EXPRESSION:
+								ARRAY REFERENCE:
+									NAME: x -- Has Offset: 2 -- Level: 2
+									[
+										NUMBER WITH VALUE: 2
+									]
+								OPERATOR: multiplication
+								IDENTIFIER WITH NAME: b -- Offset: 0 -- Level: 0
+							END OF EXPRESSION
+						END OF EXPRESSION
+					)
+					END OF FUNCTION CALL
+				END OF EXPRESSION
+			END OF ASSIGNMENT STATEMENT
+		END OF BLOCK STATEMENT
+	END OF BLOCK STATEMENT
+END OF FUNCTION
+VARIABLE DEC: INT  z  -- Has offset: 101 -- Level: 0
+FUNCTION:
+INT main -- Level: 0 -- Offset: NA 
+(
+	PARAMETER: 	INT  arg1
+	PARAMETER: 	INT  arg2 []
+)
+	BLOCK STATEMENT:
+		WRITE STATEMENT.
+			FUNCTION CALL:
+			f
+			(
+				EXPRESSION:
+					EXPRESSION:
+						EXPRESSION:
+							IDENTIFIER WITH NAME: arg1 -- Offset: 0 -- Level: 0
+							OPERATOR: plus
+							ARRAY REFERENCE:
+								NAME: arg2 -- Has Offset: 1 -- Level: 1
+								[
+									EXPRESSION:
+										NUMBER WITH VALUE: 3
+										OPERATOR: plus
+										NUMBER WITH VALUE: 5
+									END OF EXPRESSION
+								]
+						END OF EXPRESSION
+						OPERATOR: minus
+						IDENTIFIER WITH NAME: z -- Offset: 101 -- Level: 101
+					END OF EXPRESSION
+					OPERATOR: plus
+					IDENTIFIER WITH NAME: y -- Offset: 100 -- Level: 100
+				END OF EXPRESSION
+			)
+			END OF FUNCTION CALL
+		END OF WRITE STATEMENT.
+		WRITE STATEMENT.
+			FUNCTION CALL:
+			f
+			(
+				EXPRESSION:
+					EXPRESSION:
+						EXPRESSION:
+							IDENTIFIER WITH NAME: arg1 -- Offset: 0 -- Level: 0
+							OPERATOR: plus
+							ARRAY REFERENCE:
+								NAME: arg2 -- Has Offset: 1 -- Level: 1
+								[
+									EXPRESSION:
+										NUMBER WITH VALUE: 3
+										OPERATOR: plus
+										NUMBER WITH VALUE: 5
+									END OF EXPRESSION
+								]
+						END OF EXPRESSION
+						OPERATOR: minus
+						IDENTIFIER WITH NAME: z -- Offset: 101 -- Level: 101
+					END OF EXPRESSION
+					OPERATOR: plus
+					IDENTIFIER WITH NAME: y -- Offset: 100 -- Level: 100
+				END OF EXPRESSION
+			)
+			END OF FUNCTION CALL
+		END OF WRITE STATEMENT.
+	END OF BLOCK STATEMENT
+END OF FUNCTION

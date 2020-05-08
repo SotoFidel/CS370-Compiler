@@ -47,4 +47,6 @@ struct SymbTab
 
 
 struct SymbTab * Insert(char *name, enum DATATYPE Type, int isafunc, int  level, int mysize, int offset, ASTNode * fparms );
+char* CreateTemp();
+
 #endif

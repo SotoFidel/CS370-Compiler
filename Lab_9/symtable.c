@@ -19,6 +19,9 @@
       *Added more information to be printed in the symbol table display function.
        Added a switch statement that will print out a word represenation of 
        IsAFunc and Type.
+
+   Datee: May 6, 2020
+      *Edited documentation to match precondition and postcondition documentation requiremments
 */
 
     
@@ -28,18 +31,21 @@
 #include "symtable.h"
 
 struct SymbTab * first = NULL;
+int GTEMP = 0;
 
 
-/* Simple Insert into the symbol table with the size, type level that the name is being inserted into */
-
+/*
+   PRECONDITION: The function takes information abou thte symbol (its  name, data type, isafunc, level, size, offset, and formal parameters)
+   POSTCONDITION: The function will insert the symbol with said information into the symbol table.
+*/
 struct SymbTab * Insert(char *name, enum DATATYPE Type, int isafunc, int  level, int mysize, int offset , ASTNode * fparms)
 {
   struct SymbTab * n;
     n=Search(name,level, 0);
     if(n!=NULL)
       {
-      printf("\n\tThe name %s exists at level %d already in the symbol table\n\tDuplicate can.t be inserted",name, level);
-      return (NULL);
+         printf("\n\tThe name %s exists at level %d already in the symbol table\n\tDuplicate can.t be inserted",name, level);
+         return (NULL);
       }
     else
     {
@@ -67,14 +73,33 @@ struct SymbTab * Insert(char *name, enum DATATYPE Type, int isafunc, int  level,
       return (p);
  
     }
-     
-  printf("\n\tLabel inserted\n");
-}
+  
+}//end of Insert
 
-/* print out a single symbol table entry -- for debugging */
+
+/*
+   PRECONDITION: the function gets called by the Y file
+   POSTCONDITION: The function will return a temp label for an expression
+*/
+char * CreateTemp()
+{ 
+char hold[100];
+char *s;
+sprintf(hold,"_t%d",GTEMP++);
+s=strdup(hold);
+return (s);
+
+} //End of CreateTemp
+
+/* 
+   PRECONDITION: The function takes a symbol table pointer to a symbol
+   POSTCONDITION: Print out a single symbol table entry with as much info as possible -- for debugging */
 void PrintSym(struct SymbTab *s)
 {
          printf("%-10s\t%-10d\t%-10d\t%-10d",s->name, s->offset, s->level,s->mysize);
+
+
+         //Both of the switch statements are to print strings rather than enum values
          switch(s->Type){
            case intType:
               printf("\t%-10s","INT");
@@ -107,11 +132,10 @@ void PrintSym(struct SymbTab *s)
 
          printf("\n");
 
-}
+} // end of PrintSym
 
 
-/*  General display to see what is our symbol table */
-
+/*  General display to see what is our symbol table. Calls PrintSym */
 void Display()
 {
    int i;
@@ -124,18 +148,19 @@ void Display()
          PrintSym(p);
          p=p->next;
       }
-}
+} // end of Display
 
-/*  Search for a symbol name at level or below.  We have to do multiple passes into the symbol table because we have to find
+
+
+/* 
+
+   PRECONDITION: Takes the symbol name to be searched, which level to search it at, and whether the search should be recursive or not.
+   
+   POSTCONDITION:
+   Search for a symbol name at level or below.  We have to do multiple passes into the symbol table because we have to find
    the name closest to us 
-
-
   If recur is non-zero, then we look through all of the levels, otherwise, only our level 
    We return a pointer to a SymbolTab structure so that we can use other functions/methods to get the attributes */
-
- 
-
-
 struct SymbTab * Search(char name[], int level, int recur)
 {
    int i,flag=0;
@@ -157,12 +182,14 @@ struct SymbTab * Search(char name[], int level, int recur)
 
 
    return  NULL;  /* did not find it, return 0 */
-}
+} // end of Search
 
-/* Remove all enteries that have the indicated level
+
+
+/* 
+   PRECONDITION: The function takes the level at which to delete all the entries.
+   POSTCONDITION: Remove all enteries that have the indicated level
    We need to take care about updating first pointer into the linked list when we are deleting edge elements */
-
-
 int Delete(int level)
 {
     struct SymbTab *p,*f=NULL;  /* we follow with pointer f */
@@ -195,4 +222,4 @@ int Delete(int level)
 
       }
     return(SIZE);
-}
+} // end of Delete

@@ -22,12 +22,22 @@
               offset and level of the variable.
     */
 
+   /*
+        Date: May 6, 2020
+        Added documentation to match precondition and postcondition documentation requirement
+   */
+
 #include "ast.h"
 #include "symtable.h"
 #include <stdio.h>
 #include <malloc.h>
 
-//1 if ok, 0 if not ok.
+
+
+/*
+    PRECONDITION: The function takes a formal parameter and actual parameter list
+    POSTCONDITION: The function returns 1 if the lists' length and semantic type match. 0 otherwise
+*/
 int checkFormalsAndParms(ASTNode *f, ASTNode *a)
 {
     if ((f == NULL) && (a==NULL))
@@ -46,15 +56,21 @@ int checkFormalsAndParms(ASTNode *f, ASTNode *a)
     return (checkFormalsAndParms(f->next, a->next));
 }
 
-    /*
-        variables to use when printing. This is being 
-        done because the DATAYPE and OPERATOR enums
-        are, technically, numbers, and they get printed as such.
-        This aleviates that problem.
-    */ 
-    char *type;
-    char *op;
 
+/*
+    variables to use when printing. This is being 
+    done because the DATAYPE and OPERATOR enums
+    are, technically, numbers, and they get printed as such.
+    This aleviates that problem.
+*/ 
+char *type;
+char *op;
+
+
+/*
+    PRECONDITION: The function takes a node type to create the node
+    POSTCONDITION: The function creates an AST node and returns it.
+*/
 ASTNode *ASTCreateNode(enum NODETYPE type)
 {
     ASTNode *p;
@@ -71,6 +87,7 @@ ASTNode *ASTCreateNode(enum NODETYPE type)
     return p;
 }
 
+
 /**
  * printTabs function to print tabs according to the level.
 */
@@ -81,6 +98,11 @@ void printTabs(int level) {
     }
 }
 
+
+/*
+    PRECONDITION: The function takes a datatype enum
+    POSTCONDITION: Assigns a matching string according to the datatype enum value
+*/
 char *typeToString(enum DATATYPE typeParam) {
 
     // Datatype of variable declaration
@@ -105,8 +127,9 @@ char *typeToString(enum DATATYPE typeParam) {
  
 
 /**
- * ASTprint function. This will print out information about
- * the node according to what type of node it is.
+ * ASTprint function. 
+ * PRECONDITION: The function will take an astNode and level to print its info.
+ * POSTCONDITION: This will print out information about the node according to what type of node it is.
 */
 void ASTprint(ASTNode *p, int level)
 {
@@ -195,7 +218,6 @@ void ASTprint(ASTNode *p, int level)
             {
                 printf(" []");
             }
-
             printf("\n");
 
         break;
@@ -215,6 +237,14 @@ void ASTprint(ASTNode *p, int level)
             printf("END OF BLOCK STATEMENT\n");
             
         break;
+
+        case exprStmt:
+            printTabs(level);
+            printf("EXPRESSION STATEMENT:\n");
+            ASTprint(p->s1, level + 1);
+            printTabs(level);
+            printf("END OF EXPRESSION STATEMENT\n");
+        break;
         
         case expression:
         //Expression statement
@@ -226,8 +256,7 @@ void ASTprint(ASTNode *p, int level)
                 3. RHS
                 To make the output file more readable
             */
-            printTabs(level);
-            printf("EXPRESSION:\n");
+           
 
             //LHS
             ASTprint(p->s1, level + 1);
@@ -295,9 +324,6 @@ void ASTprint(ASTNode *p, int level)
             
             //RHS
             ASTprint(p->s2, level + 1);
-
-            printTabs(level);
-            printf("END OF EXPRESSION\n");
         break;
 
         case myWrite:
@@ -305,7 +331,16 @@ void ASTprint(ASTNode *p, int level)
             printTabs(level);
             printf("WRITE STATEMENT.\n");
 
-            ASTprint(p->s1, level + 1);
+            if (p->s1 != NULL)
+            {
+                ASTprint(p->s1, level + 1);
+            }
+            else
+            {
+                printTabs(level + 1);
+                printf("%s  %s\n", p->label,  p->name);
+            }
+            
 
             printTabs(level);
             printf("END OF WRITE STATEMENT.\n");
@@ -334,7 +369,7 @@ void ASTprint(ASTNode *p, int level)
             printTabs(level);
             if (p->s1 == NULL)
             {
-                printf("IDENTIFIER WITH NAME: %s -- Offset: %d -- Level: %d\n", p->name, p->symbol->offset, p->symbol->offset);
+                printf("IDENTIFIER WITH NAME: %s -- Offset: %d -- Level: %d\n", p->name, p->symbol->offset, p->symbol->level);
             }
             else 
             {
@@ -490,4 +525,4 @@ void ASTprint(ASTNode *p, int level)
     //Statements are connected by the 'next' pointer
     ASTprint (p -> next, level);
 
-}
+} //end of ASTprint

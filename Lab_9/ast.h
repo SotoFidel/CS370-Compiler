@@ -41,7 +41,8 @@ enum NODETYPE
     selection,
     selectionBody,
     iteration,
-    argslist
+    argslist,
+    exprStmt
 }; // end of enum NODETYPE
 
 enum DATATYPE
@@ -77,6 +78,7 @@ typedef struct ASTNodeType
     enum OPERATOR operator;
     
     char *name;
+    char *label;
     int size;
     
     struct ASTNodeType *s1, *s2, *next;
